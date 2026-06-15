@@ -1,0 +1,21 @@
+---
+/**
+ * Renders all three languages; CSS (via html[data-lang]) shows the active one.
+ * Use `block` for paragraph-level content.
+ */
+import type { Loc } from '../lib/types';
+interface Props {
+  t: Loc;
+  as?: keyof HTMLElementTagNameMap;
+  block?: boolean;
+  class?: string;
+}
+const { t, as = 'span', block = false, class: cls = '' } = Astro.props;
+const Tag = as as any;
+const wrapClass = (block ? 'i18n-block' : 'i18n') + (cls ? ' ' + cls : '');
+---
+<Tag class={wrapClass}>
+  <span lang="zh" set:html={t.zh}></span>
+  <span lang="en" set:html={t.en}></span>
+  <span lang="ja" set:html={t.ja}></span>
+</Tag>

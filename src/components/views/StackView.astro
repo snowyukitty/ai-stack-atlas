@@ -1,0 +1,105 @@
+---
+import L from '../L.astro';
+import ProductCard from '../ProductCard.astro';
+import { ui } from '../../data/ui';
+import { products } from '../../data/products';
+
+const mine = products.filter((p) => p.mine);
+const subs = ['Claude', 'Codex', 'Gemini', 'SuperGrok', 'Perplexity', 'GitHub Copilot'];
+const cliSetup = [
+  { cmd: 'claude' }, { cmd: 'codex' }, { cmd: 'agy' },
+  { cmd: 'agent' }, { cmd: 'aider' }, { cmd: 'grok' },
+];
+---
+<section class="view" data-view="stack" hidden>
+  <section class="block">
+    <div class="section-head">
+      <p class="kicker"><L t={ui.nav.stack} /></p>
+      <h2><L t={{ zh: '我的 AI Stack', en: 'My AI stack', ja: '私の AI スタック' }} /></h2>
+      <p><L t={{
+        zh: '这页是个人作品集：我实际订阅什么、怎么搭环境、自研了什么、以及对各产品的定位结论。',
+        en: "A personal portfolio: what I actually subscribe to, how I set up my environment, what I've built, and my takes on positioning.",
+        ja: '個人ポートフォリオ：実際の契約、環境構築、自作物、各製品の位置づけの結論。',
+      }} /></p>
+    </div>
+
+    <div class="card">
+      <h3><L t={{ zh: '当前订阅', en: 'Current subscriptions', ja: '現在の契約' }} /></h3>
+      <p style="color:var(--text-soft); font-size:.9rem; margin:.4rem 0 .2rem;"><L t={{
+        zh: '7 个 AI 平台 / 模型在用。曾用过 v0、Lovable、Cursor，现已退订（场景被覆盖）。',
+        en: '7 AI platforms / models in active use. Previously used v0, Lovable and Cursor — now unsubscribed (needs covered elsewhere).',
+        ja: '7 つの AI プラットフォーム／モデルを利用中。v0・Lovable・Cursor は過去に利用、現在は解約（用途が他で充足）。',
+      }} /></p>
+      <div class="pillrow">{subs.map((s) => <span class="badge">{s}</span>)}</div>
+    </div>
+
+    <hr class="soft" />
+
+    <div class="card">
+      <h3><L t={{ zh: 'Windows + wmux 终端环境', en: 'Windows + wmux terminal setup', ja: 'Windows + wmux 端末環境' }} /></h3>
+      <p style="color:var(--text-soft); font-size:.9rem; margin:.4rem 0 .6rem;"><L t={{
+        zh: '装进环境的 5 个核心 CLI（grok 作为第 6 个测试）。注意：Grok 在 PowerShell 用 install.ps1，macOS/Linux/WSL 用 install.sh。',
+        en: 'The 5 core CLIs in the environment (grok as an optional 6th to test). Note: Grok uses install.ps1 in PowerShell, install.sh on macOS/Linux/WSL.',
+        ja: '環境に入れる 5 つの中核 CLI（grok は 6 番目の試用枠）。注意：Grok は PowerShell では install.ps1、macOS/Linux/WSL では install.sh。',
+      }} /></p>
+      <div class="pillrow">{cliSetup.map((c) => <span class="badge cmd">{c.cmd}</span>)}</div>
+    </div>
+
+    <hr class="soft" />
+
+    <div class="section-head">
+      <p class="kicker"><L t={ui.labels.mine} /></p>
+      <h2><L t={{ zh: '自研项目', en: 'What I built', ja: '自作プロジェクト' }} /></h2>
+      <p><L t={{
+        zh: '自研 AI agent 基础设施 / agent automation stack——不要直接叫它们 coding agent。',
+        en: 'Custom AI agent infrastructure / agent automation stack — do not call these "coding agents" outright.',
+        ja: '自作 AI agent 基盤／agent automation stack——これらを直接「coding agent」と呼ばない。',
+      }} /></p>
+    </div>
+    <div class="grid cols-2">{mine.map((p) => <ProductCard p={p} />)}</div>
+
+    <div class="note" style="margin-top:1.2rem;"><L t={{
+      zh: '履历写法：Built custom AI agent infrastructure, including OpenClaw, a self-hosted multi-provider AI gateway, and Hermes Agent, a workflow automation agent.',
+      en: 'Résumé line: Built custom AI agent infrastructure, including OpenClaw, a self-hosted multi-provider AI gateway, and Hermes Agent, a workflow automation agent.',
+      ja: '履歴書向け：Built custom AI agent infrastructure, including OpenClaw, a self-hosted multi-provider AI gateway, and Hermes Agent, a workflow automation agent.',
+    }} block /></div>
+
+    <hr class="soft" />
+
+    <div class="section-head">
+      <h2><L t={{ zh: '定位结论速查', en: 'Positioning cheat-sheet', ja: '位置づけ早見' }} /></h2>
+    </div>
+    <div class="grid cols-2">
+      <div class="card">
+        <h3><L t={{ zh: '编程智能体排名', en: 'Coding-agent ranking', ja: 'コーディングエージェント順位' }} /></h3>
+        <p style="color:var(--text-soft); font-size:.9rem; margin-top:.4rem;">Claude Code &gt; Codex &gt; Antigravity &gt; Grok Build</p>
+        <p style="margin-top:.6rem;"><a href="#rankings" data-go="rankings">→ <L t={{ zh: '看完整排名', en: 'full rankings', ja: '全順位を見る' }} /></a></p>
+      </div>
+      <div class="card">
+        <h3><L t={{ zh: '基础设施 / harness', en: 'Infra / harness', ja: '基盤／harness' }} /></h3>
+        <p style="color:var(--text-soft); font-size:.9rem; margin-top:.4rem;"><L t={{
+          zh: '网关：OpenClaw &gt; Hermes Agent。Harness：LangGraph/LangChain 与 Pi 各有场景。',
+          en: 'Gateway: OpenClaw > Hermes Agent. Harness: LangGraph/LangChain and Pi each have their place.',
+          ja: 'ゲートウェイ：OpenClaw > Hermes Agent。Harness：LangGraph/LangChain と Pi に各々の出番。',
+        }} /></p>
+        <p style="margin-top:.6rem;"><a href="#concepts" data-go="concepts">→ <L t={{ zh: '搞懂概念', en: 'the concepts', ja: '概念を理解' }} /></a></p>
+      </div>
+      <div class="card">
+        <h3>Cursor ≠ <L t={{ zh: '中国公司', en: 'a Chinese company', ja: '中国企業' }} /></h3>
+        <p style="color:var(--text-soft); font-size:.9rem; margin-top:.4rem;"><L t={{
+          zh: 'Cursor 是旧金山 Anysphere；其 Composer 基于 Kimi/Moonshot 开源 checkpoint 再训练，只因开源可用、成本性能合适。',
+          en: 'Cursor is San Francisco-based Anysphere; its Composer is re-trained on a Kimi/Moonshot open checkpoint purely for availability and cost/performance.',
+          ja: 'Cursor はサンフランシスコの Anysphere。Composer は Kimi/Moonshot のオープン checkpoint を再学習したもので、可用性とコスト性能のための選択にすぎない。',
+        }} /></p>
+      </div>
+      <div class="card">
+        <h3>Gemini CLI → Antigravity CLI</h3>
+        <p style="color:var(--text-soft); font-size:.9rem; margin-top:.4rem;"><L t={{
+          zh: '2026-06-18 起 Gemini CLI 对 Pro/Ultra 与免费个人停服，主线转向 agy。新用户直接上 Antigravity CLI。',
+          en: 'From 2026-06-18 Gemini CLI stops serving Pro/Ultra & free individuals; mainline moves to agy. New users should go straight to Antigravity CLI.',
+          ja: '2026-06-18 より Gemini CLI は Pro/Ultra と無料個人への提供を停止、主軸は agy へ。新規は Antigravity CLI へ直行。',
+        }} /></p>
+      </div>
+    </div>
+  </section>
+</section>

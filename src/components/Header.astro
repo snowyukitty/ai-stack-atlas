@@ -1,0 +1,34 @@
+---
+import { ui } from '../data/ui';
+import L from './L.astro';
+const nav = [
+  { view: 'home', key: 'home' },
+  { view: 'catalog', key: 'catalog' },
+  { view: 'concepts', key: 'concepts' },
+  { view: 'rankings', key: 'rankings' },
+  { view: 'stack', key: 'stack' },
+] as const;
+---
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="#home" data-go="home">
+      <span class="logo">◆</span>
+      <L t={ui.siteTitle} />
+    </a>
+    <nav class="nav" id="mainnav">
+      {nav.map((n) => (
+        <a href={'#' + n.view} data-go={n.view} aria-current={n.view === 'home' ? 'page' : undefined}>
+          <L t={(ui.nav as any)[n.key]} />
+        </a>
+      ))}
+    </nav>
+    <div class="controls">
+      <div class="seg" id="langseg" role="group" aria-label="language">
+        <button data-lang="zh" type="button">中</button>
+        <button data-lang="en" type="button">EN</button>
+        <button data-lang="ja" type="button">日</button>
+      </div>
+      <button class="icon-btn" id="themebtn" type="button" aria-label="theme">🌓</button>
+    </div>
+  </div>
+</header>

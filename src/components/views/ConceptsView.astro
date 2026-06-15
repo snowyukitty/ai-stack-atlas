@@ -1,0 +1,41 @@
+---
+import L from '../L.astro';
+import { ui } from '../../data/ui';
+import { concepts, conceptMap } from '../../data/concepts';
+---
+<section class="view" data-view="concepts" hidden>
+  <section class="block">
+    <div class="section-head">
+      <p class="kicker"><L t={ui.nav.concepts} /></p>
+      <h2><L t={{ zh: '核心概念', en: 'Core concepts', ja: 'コア概念' }} /></h2>
+      <p><L t={{
+        zh: '搞清楚这些词，整个 AI stack 的产品就能各归其位。',
+        en: 'Get these terms straight and every product in the AI stack falls into place.',
+        ja: 'これらの語を押さえれば、AI スタックの各製品が腑に落ちる。',
+      }} /></p>
+    </div>
+
+    <div class="grid cols-2">
+      {concepts.map((c) => (
+        <article class="card concept" id={'c-' + c.id}>
+          <h3><L t={c.term} /></h3>
+          <p class="hook">“<L t={c.hook} />”</p>
+          <p class="body"><L t={c.body} block /></p>
+          {c.see && c.see.length > 0 && (
+            <p class="see">
+              <L t={ui.labels.seeAlso} />:
+              {c.see.map((id, i) => (
+                <>
+                  {i > 0 && ' · '}
+                  <a href={'#concepts/c-' + id} data-go="concepts" data-target={'c-' + id}>
+                    {conceptMap[id] ? <L t={conceptMap[id].term} /> : id}
+                  </a>
+                </>
+              ))}
+            </p>
+          )}
+        </article>
+      ))}
+    </div>
+  </section>
+</section>

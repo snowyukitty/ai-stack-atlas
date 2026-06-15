@@ -1,0 +1,16 @@
+---
+import { ui } from '../data/ui';
+import { LAST_UPDATED } from '../data/products';
+import L from './L.astro';
+---
+<footer class="site-footer">
+  <div class="wrap">
+    <div>
+      <div><L t={ui.footer.built} /></div>
+      <div style="margin-top:.3rem; max-width:60ch;"><L t={ui.footer.disclaimer} /></div>
+    </div>
+    <div>
+      <div><L t={ui.labels.lastUpdated} />: <code>{LAST_UPDATED}</code></div>
+    </div>
+  </div>
+</footer>

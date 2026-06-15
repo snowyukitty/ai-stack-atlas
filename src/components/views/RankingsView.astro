@@ -1,0 +1,79 @@
+---
+import L from '../L.astro';
+import { ui } from '../../data/ui';
+import { rankings } from '../../data/rankings';
+import { productMap } from '../../data/products';
+
+const personal = rankings.filter((r) => r.kind === 'personal');
+const benches = rankings.filter((r) => r.kind === 'benchmark');
+const hasCard = (id?: string) => !!(id && productMap[id]);
+---
+<section class="view" data-view="rankings" hidden>
+  <section class="block">
+    <div class="section-head">
+      <p class="kicker"><L t={ui.nav.rankings} /></p>
+      <h2><L t={{ zh: '排名与评测', en: 'Rankings & benchmarks', ja: 'ランキングとベンチ' }} /></h2>
+      <p><L t={{
+        zh: '上半部分是个人主观排名，下半部分是公开 benchmark。两者都会随版本变化。',
+        en: 'Personal subjective rankings up top, public benchmarks below. Both shift with each release.',
+        ja: '上段は個人の主観順位、下段は公開ベンチ。いずれもリリースごとに変動。',
+      }} /></p>
+    </div>
+
+    <h3 style="margin-bottom:1rem;">🫵 <L t={{ zh: '个人排名', en: 'Personal rankings', ja: '個人ランキング' }} /></h3>
+    {personal.map((r) => (
+      <div class="card ranklist">
+        <h3><L t={r.title} /></h3>
+        <p style="color:var(--text-soft); font-size:.9rem; margin:.3rem 0 .8rem;"><L t={r.intro} /></p>
+        <table class="rank">
+          <tbody>
+            {r.rows.map((row) => (
+              <tr>
+                <td style="width:1px;"><span class="rk">{row.rank}</span></td>
+                <td>
+                  {hasCard(row.productId)
+                    ? <a href={'#catalog/p-' + row.productId} data-go="catalog" data-target={'p-' + row.productId}>{row.name}</a>
+                    : <span>{row.name}</span>}
+                </td>
+                <td style="color:var(--text-soft);"><L t={row.note} /></td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    ))}
+
+    <hr class="soft" />
+
+    <h3 style="margin-bottom:1rem;">📊 <L t={{ zh: '公开 Benchmark', en: 'Public benchmarks', ja: '公開ベンチマーク' }} /></h3>
+    {benches.map((r) => (
+      <div class="card ranklist">
+        <h3><L t={r.title} /></h3>
+        <p style="color:var(--text-soft); font-size:.9rem; margin:.3rem 0 .8rem;"><L t={r.intro} /></p>
+        <table class="rank">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th><L t={{ zh: '产品 / 模型', en: 'Product / model', ja: '製品／モデル' }} /></th>
+              <th><L t={{ zh: '成绩', en: 'Score', ja: 'スコア' }} /></th>
+            </tr>
+          </thead>
+          <tbody>
+            {r.rows.map((row) => (
+              <tr>
+                <td style="width:1px;"><span class="rk">{row.rank}</span></td>
+                <td>
+                  {hasCard(row.productId)
+                    ? <a href={'#catalog/p-' + row.productId} data-go="catalog" data-target={'p-' + row.productId}>{row.name}</a>
+                    : <span>{row.name}</span>}
+                </td>
+                <td><L t={row.note} /></td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        {r.source && <p class="src"><L t={r.source} /></p>}
+      </div>
+    ))}
+  </section>
+</section>

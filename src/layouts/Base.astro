@@ -1,0 +1,153 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+const { title, description } = Astro.props;
+const fullTitle = title ? `${title} · AI Stack Atlas` : 'AI Stack Atlas';
+const desc =
+  description ??
+  'A trilingual (中/EN/日) field guide to the modern AI stack: coding agents, CLIs, agent harnesses and infrastructure.';
+
+// Favicon inlined as a data URI so the single file needs no external assets.
+const favicon =
+  "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230b0e14'/%3E%3Cpath d='M16 6 L26 22 L6 22 Z' fill='%237c9cff'/%3E%3Ccircle cx='16' cy='17' r='3.2' fill='%230b0e14'/%3E%3C/svg%3E";
+---
+<!doctype html>
+<html lang="en" data-theme="dark" data-lang="zh">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={desc} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={desc} />
+    <meta property="og:type" content="website" />
+    <meta name="color-scheme" content="dark light" />
+    <link rel="icon" href={favicon} />
+    {/* Set lang + theme before paint to avoid flash. */}
+    <script is:inline>
+      (function () {
+        try {
+          var L = localStorage.getItem('aistack-lang');
+          if (!L) {
+            var n = (navigator.language || 'zh').toLowerCase();
+            L = n.startsWith('ja') ? 'ja' : n.startsWith('en') ? 'en' : 'zh';
+          }
+          document.documentElement.setAttribute('data-lang', L);
+          document.documentElement.setAttribute('lang', L === 'zh' ? 'zh-Hans' : L);
+          var T = localStorage.getItem('aistack-theme') || 'dark';
+          document.documentElement.setAttribute('data-theme', T);
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body>
+    <Header />
+    <main class="wrap">
+      <slot />
+    </main>
+    <Footer />
+
+    {/* ---- language + theme controls ---- */}
+    <script is:inline>
+      (function () {
+        var root = document.documentElement;
+        function syncLang() {
+          var cur = root.getAttribute('data-lang');
+          document.querySelectorAll('#langseg button').forEach(function (b) {
+            b.setAttribute('aria-pressed', b.getAttribute('data-lang') === cur ? 'true' : 'false');
+          });
+        }
+        document.querySelectorAll('#langseg button').forEach(function (b) {
+          b.addEventListener('click', function () {
+            var l = b.getAttribute('data-lang');
+            root.setAttribute('data-lang', l);
+            root.setAttribute('lang', l === 'zh' ? 'zh-Hans' : l);
+            try { localStorage.setItem('aistack-lang', l); } catch (e) {}
+            syncLang();
+          });
+        });
+        var tb = document.getElementById('themebtn');
+        if (tb) {
+          tb.addEventListener('click', function () {
+            var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+            root.setAttribute('data-theme', next);
+            try { localStorage.setItem('aistack-theme', next); } catch (e) {}
+          });
+        }
+        syncLang();
+      })();
+    </script>
+
+    {/* ---- single-page view router (works from file://) ---- */}
+    <script is:inline>
+      (function () {
+        var views = Array.prototype.slice.call(document.querySelectorAll('[data-view]'));
+        var navlinks = Array.prototype.slice.call(document.querySelectorAll('#mainnav a[data-go]'));
+        var valid = {};
+        views.forEach(function (v) { valid[v.getAttribute('data-view')] = true; });
+
+        function show(name, target, cat) {
+          if (!valid[name]) name = 'home';
+          views.forEach(function (v) {
+            v.hidden = v.getAttribute('data-view') !== name;
+          });
+          navlinks.forEach(function (a) {
+            a.setAttribute('aria-current', a.getAttribute('data-go') === name ? 'page' : 'false');
+          });
+          // Optional: apply a catalog category filter.
+          if (name === 'catalog' && cat && window.__catalogSetCat) {
+            window.__catalogSetCat(cat);
+          }
+          // Scroll: to a target element, or to top of the view.
+          if (target) {
+            var el = document.getElementById(target);
+            if (el) { el.scrollIntoView({ block: 'start' }); return; }
+          }
+          window.scrollTo(0, 0);
+        }
+
+        function go(name, target, cat) {
+          var hash = '#' + name + (cat ? '/cat=' + cat : target ? '/' + target : '');
+          if (location.hash !== hash) {
+            history.pushState({ v: name, t: target, c: cat }, '', hash);
+          }
+          show(name, target, cat);
+        }
+
+        // Parse "#view", "#view/target", "#view/cat=xxx"
+        function parse() {
+          var h = (location.hash || '').replace(/^#/, '');
+          if (!h) return { name: 'home' };
+          var slash = h.indexOf('/');
+          if (slash === -1) return { name: h };
+          var name = h.slice(0, slash);
+          var rest = h.slice(slash + 1);
+          if (rest.indexOf('cat=') === 0) return { name: name, cat: rest.slice(4) };
+          return { name: name, target: rest };
+        }
+
+        // Intercept any element with data-go.
+        document.addEventListener('click', function (e) {
+          var a = e.target.closest('[data-go]');
+          if (!a) return;
+          e.preventDefault();
+          go(a.getAttribute('data-go'), a.getAttribute('data-target') || null, a.getAttribute('data-cat') || null);
+        });
+
+        window.addEventListener('popstate', function () {
+          var p = parse();
+          show(p.name, p.target, p.cat);
+        });
+
+        var init = parse();
+        show(init.name, init.target, init.cat);
+      })();
+    </script>
+  </body>
+</html>

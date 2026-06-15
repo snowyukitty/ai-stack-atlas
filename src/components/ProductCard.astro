@@ -1,0 +1,97 @@
+---
+import type { Product } from '../lib/types';
+import { ui } from '../data/ui';
+import L from './L.astro';
+
+interface Props { p: Product; }
+const { p } = Astro.props;
+
+const licenseBadge = {
+  open: { cls: 'open', t: ui.labels.openSource },
+  partial: { cls: 'partial', t: ui.labels.partialOpen },
+  closed: { cls: '', t: ui.labels.closed },
+}[p.license];
+
+// Search haystack for client-side filtering.
+const haystack = [
+  p.name, p.vendor, p.command ?? '', ...p.tags,
+  p.subtype.en, p.tagline.en, p.subtype.zh, p.subtype.ja,
+].join(' ').toLowerCase();
+
+const rating = p.rating ?? 0;
+---
+<article
+  class="card product"
+  id={`p-${p.id}`}
+  data-product
+  data-cat={p.category}
+  data-tags={p.tags.join(' ')}
+  data-haystack={haystack}
+>
+  <div class="top">
+    <div class="title">
+      <span class="name">{p.name}</span>
+      <span class="vendor">{p.vendor} · <L t={p.subtype} /></span>
+    </div>
+    {rating > 0 && (
+      <span class="rating" title={`${rating}/5`} aria-label={`${rating}/5`}>
+        {Array.from({ length: 5 }).map((_, i) => (
+          <span class={i < rating ? '' : 'off'}>★</span>
+        ))}
+      </span>
+    )}
+  </div>
+
+  <div class="badges">
+    {p.featured && <span class="badge feat"><L t={ui.labels.featured} /></span>}
+    {p.mine && <span class="badge mine"><L t={ui.labels.mine} /></span>}
+    {p.command && <span class="badge cmd">{p.command}</span>}
+    <span class={`badge ${licenseBadge.cls}`}><L t={licenseBadge.t} /></span>
+    {p.status === 'sunset' && <span class="badge sunset"><L t={ui.labels.sunset} /></span>}
+    {p.status === 'beta' && <span class="badge"><L t={ui.labels.beta} /></span>}
+  </div>
+
+  <p class="tagline"><L t={p.tagline} /></p>
+
+  <div class="meta">
+    <div class="row">
+      <span class="k"><L t={ui.labels.models} /></span>
+      <span class="v model-chips">{p.models.map((m) => <span>{m}</span>)}</span>
+    </div>
+    <div class="row">
+      <span class="k"><L t={ui.labels.pricing} /></span>
+      <span class="v"><L t={p.pricing} /></span>
+    </div>
+  </div>
+
+  {p.benchmarks && p.benchmarks.length > 0 && (
+    <div class="bench">
+      {p.benchmarks.map((b) => (
+        <span class="b">{b.label} <b>{b.value}</b></span>
+      ))}
+    </div>
+  )}
+
+  <details class="pc">
+    <summary><L t={ui.labels.pros} /> · <L t={ui.labels.cons} /> · <L t={ui.labels.bestFor} /></summary>
+    <p class="desc" style="margin:.6rem 0 0;"><L t={p.description} block /></p>
+    <div class="proscons">
+      <div class="pros">
+        <div class="h"><L t={ui.labels.pros} /></div>
+        <ul>{p.pros.map((x) => <li><L t={x} /></li>)}</ul>
+      </div>
+      <div class="cons">
+        <div class="h"><L t={ui.labels.cons} /></div>
+        <ul>{p.cons.map((x) => <li><L t={x} /></li>)}</ul>
+      </div>
+    </div>
+    {p.bestFor && (
+      <p class="bestfor"><b><L t={ui.labels.bestFor} />:</b> <L t={p.bestFor} /></p>
+    )}
+    {p.links.length > 0 && (
+      <div class="plinks">
+        {p.links.map((l) => <a href={l.url} target="_blank" rel="noopener">{l.label} ↗</a>)}
+      </div>
+    )}
+  </details>
+</article>

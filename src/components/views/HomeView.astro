@@ -1,0 +1,89 @@
+---
+import L from '../L.astro';
+import ProductCard from '../ProductCard.astro';
+import { ui } from '../../data/ui';
+import { categories } from '../../data/categories';
+import { products } from '../../data/products';
+
+const featured = products.filter((p) => p.featured);
+const countByCat = (id: string) => products.filter((p) => p.category === id).length;
+---
+<section class="view" data-view="home">
+  <div class="hero">
+    <p class="kicker">中 · EN · 日 — AI STACK ATLAS</p>
+    <h1><L t={ui.hero.title} /></h1>
+    <p class="lead"><L t={ui.hero.sub} /></p>
+    <div class="cta">
+      <a class="btn primary" href="#catalog" data-go="catalog"><L t={ui.hero.ctaCatalog} /></a>
+      <a class="btn" href="#concepts" data-go="concepts"><L t={ui.hero.ctaConcepts} /></a>
+    </div>
+  </div>
+
+  <section class="block">
+    <div class="section-head">
+      <p class="kicker"><L t={{ zh: '一张图看懂', en: 'The mental model', ja: '全体像' }} /></p>
+      <h2><L t={{ zh: '模型 → Harness → 基础设施', en: 'Model → Harness → Infrastructure', ja: 'モデル → Harness → 基盤' }} /></h2>
+      <p><L t={{
+        zh: '所有产品都能落到这条链上。先认清一个产品在链上的位置，再谈好不好用。',
+        en: 'Every product sits somewhere on this chain. Place a product on it first, then ask whether it is good.',
+        ja: 'すべての製品はこの連なりのどこかに位置する。まず位置を見極め、それから良し悪しを論じる。',
+      }} /></p>
+    </div>
+    <div class="flow">
+      <div class="step">
+        <div class="n">🧠</div>
+        <b><L t={{ zh: '模型', en: 'Model', ja: 'モデル' }} /></b>
+        <span><L t={{ zh: '大脑：负责思考', en: 'The brain: it thinks', ja: '脳：思考する' }} /></span>
+      </div>
+      <div class="arrow">→</div>
+      <div class="step">
+        <div class="n">🐚</div>
+        <b><L t={{ zh: 'Harness', en: 'Harness', ja: 'Harness' }} /></b>
+        <span><L t={{ zh: '外壳：接上工具与循环', en: 'The shell: tools + loop', ja: 'シェル：ツール＋ループ' }} /></span>
+      </div>
+      <div class="arrow">→</div>
+      <div class="step">
+        <div class="n">🛠️</div>
+        <b><L t={{ zh: '基础设施', en: 'Infrastructure', ja: '基盤' }} /></b>
+        <span><L t={{ zh: '底座：网关/编排/观测', en: 'Substrate: gateway/orchestration', ja: '土台：GW／編成／観測' }} /></span>
+      </div>
+    </div>
+    <p class="note"><L t={{
+      zh: '例：Claude Code、Codex 是「带特定 harness 的成品」；LangGraph、Pi 让你「自己写 harness」；LiteLLM、OpenClaw 是「基础设施 / 网关」。',
+      en: 'E.g. Claude Code and Codex are products with a specific harness; LangGraph and Pi let you write your own harness; LiteLLM and OpenClaw are infrastructure / gateways.',
+      ja: '例：Claude Code・Codex は「特定 harness を備えた製品」、LangGraph・Pi は「自分で harness を書く」、LiteLLM・OpenClaw は「基盤／ゲートウェイ」。',
+    }} block /></p>
+  </section>
+
+  <section class="block">
+    <div class="section-head">
+      <p class="kicker"><L t={{ zh: '六大类', en: 'Six categories', ja: '6 カテゴリ' }} /></p>
+      <h2><L t={{ zh: '按类别浏览', en: 'Browse by category', ja: 'カテゴリで見る' }} /></h2>
+    </div>
+    <div class="grid cols-cat">
+      {categories.map((c) => (
+        <a class="card cat-card" href="#catalog" data-go="catalog" data-cat={c.id}>
+          <span class="emoji">{c.icon}</span>
+          <h3><L t={c.short} /></h3>
+          <p><L t={c.blurb} /></p>
+          <span class="count">{countByCat(c.id)} <L t={ui.labels.results} /></span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="section-head">
+      <p class="kicker"><L t={ui.labels.featured} /></p>
+      <h2><L t={{ zh: '精选产品', en: 'Featured picks', ja: '注目の製品' }} /></h2>
+      <p><L t={{
+        zh: '每个类别里最值得先认识的几个。完整列表见产品图鉴。',
+        en: 'The few worth knowing first in each category. See the catalog for the full list.',
+        ja: '各カテゴリでまず知るべき数点。全件はカタログへ。',
+      }} /></p>
+    </div>
+    <div class="grid cols-2">
+      {featured.map((p) => <ProductCard p={p} />)}
+    </div>
+  </section>
+</section>

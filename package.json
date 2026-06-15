@@ -1,0 +1,17 @@
+{
+  "name": "agentic-ai-stack",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "A trilingual (中/EN/日) knowledge base & comparison hub for the modern AI stack: coding agents, CLIs, agent harnesses & infrastructure.",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "open": "astro build && start \"\" \"dist/index.html\"",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "astro": "^4.16.0"
+  }
+}

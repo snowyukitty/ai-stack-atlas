@@ -1,0 +1,123 @@
+---
+import L from '../L.astro';
+import ProductCard from '../ProductCard.astro';
+import { ui } from '../../data/ui';
+import { categories } from '../../data/categories';
+import { products } from '../../data/products';
+
+const grouped = categories.map((c) => ({
+  cat: c,
+  items: products.filter((p) => p.category === c.id),
+}));
+const total = products.length;
+---
+<section class="view" data-view="catalog" hidden>
+  <section class="block">
+    <div class="section-head">
+      <p class="kicker"><L t={ui.nav.catalog} /></p>
+      <h2><L t={{ zh: '产品图鉴', en: 'The catalog', ja: 'カタログ' }} /></h2>
+      <p><L t={{
+        zh: `共 ${total} 个产品。用搜索或类别筛选，点开每张卡片看优缺点、适合谁与链接。`,
+        en: `${total} products. Search or filter by category; expand any card for strengths, trade-offs, who it's for and links.`,
+        ja: `全 ${total} 件。検索やカテゴリで絞り込み、各カードを開くと強み・弱み・対象・リンクを表示。`,
+      }} /></p>
+    </div>
+
+    <div class="toolbar">
+      <input class="search" id="search" type="search" placeholder="" autocomplete="off" />
+      <div class="filters" id="filters">
+        <button class="chip" data-cat="all" aria-pressed="true"><L t={ui.labels.all} /></button>
+        {categories.map((c) => (
+          <button class="chip" data-cat={c.id} aria-pressed="false">
+            {c.icon} <L t={c.short} />
+          </button>
+        ))}
+      </div>
+    </div>
+
+    <div class="result-count" id="rcount"></div>
+
+    <div id="catalog">
+      {grouped.map(({ cat, items }) => (
+        <div class="cat-section" data-cat-section={cat.id} id={'cat-' + cat.id}>
+          <div class="cat-group-title">
+            <span class="emoji">{cat.icon}</span>
+            <h3><L t={cat.name} /></h3>
+          </div>
+          <div class="grid cols-2">
+            {items.map((p) => <ProductCard p={p} />)}
+          </div>
+        </div>
+      ))}
+    </div>
+    <div class="empty" id="empty" hidden><L t={ui.labels.noResults} /></div>
+  </section>
+
+  <script
+    is:inline
+    define:vars={{
+      placeholders: { zh: ui.labels.search.zh, en: ui.labels.search.en, ja: ui.labels.search.ja },
+      showingL: { zh: ui.labels.showing.zh, en: ui.labels.showing.en, ja: ui.labels.showing.ja },
+      resultsL: { zh: ui.labels.results.zh, en: ui.labels.results.en, ja: ui.labels.results.ja },
+    }}
+  >
+    (function () {
+      var root = document.documentElement;
+      var search = document.getElementById('search');
+      var filters = document.getElementById('filters');
+      var cards = Array.prototype.slice.call(document.querySelectorAll('[data-product]'));
+      var sections = Array.prototype.slice.call(document.querySelectorAll('[data-cat-section]'));
+      var rcount = document.getElementById('rcount');
+      var empty = document.getElementById('empty');
+      var activeCat = 'all';
+
+      function curLang() { return root.getAttribute('data-lang') || 'zh'; }
+      function setPlaceholder() { search.placeholder = placeholders[curLang()] || placeholders.en; }
+
+      function apply() {
+        var q = (search.value || '').trim().toLowerCase();
+        var shown = 0;
+        cards.forEach(function (card) {
+          var okCat = activeCat === 'all' || card.getAttribute('data-cat') === activeCat;
+          var okQ = !q || card.getAttribute('data-haystack').indexOf(q) !== -1;
+          var show = okCat && okQ;
+          card.style.display = show ? '' : 'none';
+          if (show) shown++;
+        });
+        sections.forEach(function (sec) {
+          var any = Array.prototype.some.call(sec.querySelectorAll('[data-product]'), function (c) {
+            return c.style.display !== 'none';
+          });
+          sec.style.display = any ? '' : 'none';
+        });
+        empty.hidden = shown !== 0;
+        rcount.textContent = (showingL[curLang()] || 'Showing') + ' ' + shown + ' ' + (resultsL[curLang()] || '');
+      }
+
+      function setCat(cat) {
+        var btn = filters.querySelector('.chip[data-cat="' + cat + '"]') ||
+                  filters.querySelector('.chip[data-cat="all"]');
+        activeCat = btn.getAttribute('data-cat');
+        filters.querySelectorAll('.chip').forEach(function (c) {
+          c.setAttribute('aria-pressed', c === btn ? 'true' : 'false');
+        });
+        apply();
+      }
+      // Expose so the router can preselect a category when navigating in.
+      window.__catalogSetCat = setCat;
+
+      filters.addEventListener('click', function (e) {
+        var btn = e.target.closest('.chip');
+        if (!btn) return;
+        setCat(btn.getAttribute('data-cat'));
+      });
+      search.addEventListener('input', apply);
+
+      new MutationObserver(function () { setPlaceholder(); apply(); })
+        .observe(root, { attributes: true, attributeFilter: ['data-lang'] });
+
+      setPlaceholder();
+      apply();
+    })();
+  </script>
+</section>
