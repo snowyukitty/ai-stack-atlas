@@ -1,5 +1,5 @@
 {
-  "name": "agentic-ai-stack",
+  "name": "ai-stack-atlas",
   "version": "0.1.0",
   "type": "module",
   "description": "A trilingual (中/EN/日) knowledge base & comparison hub for the modern AI stack: coding agents, CLIs, agent harnesses & infrastructure.",
