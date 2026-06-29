@@ -3,8 +3,11 @@ import type { Product } from '../lib/types';
 import { ui } from '../data/ui';
 import L from './L.astro';
 
-interface Props { p: Product; }
-const { p } = Astro.props;
+interface Props {
+  p: Product;
+  idPrefix?: string;
+}
+const { p, idPrefix = 'p' } = Astro.props;
 
 const licenseBadge = {
   open: { cls: 'open', t: ui.labels.openSource },
@@ -22,7 +25,7 @@ const rating = p.rating ?? 0;
 ---
 <article
   class="card product"
-  id={`p-${p.id}`}
+  id={`${idPrefix}-${p.id}`}
   data-product
   data-cat={p.category}
   data-tags={p.tags.join(' ')}

@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+  <defs>
+    <radialGradient id="bgGlow" cx="0.5" cy="0.3" r="0.8">
+      <stop offset="0" stop-color="#1b2842"/>
+      <stop offset="1" stop-color="#0b0e14"/>
+    </radialGradient>
+    <radialGradient id="stackGlow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#5be3c9" stop-opacity="0.30"/>
+      <stop offset="1" stop-color="#5be3c9" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Container: dark squircle (radius ~21%). -->
+  <rect width="1024" height="1024" rx="220" fill="url(#bgGlow)"/>
+
+  <!-- Glow pooled behind the stack (kept low so layers stay crisp when small). -->
+  <ellipse cx="512" cy="504" rx="300" ry="280" fill="url(#stackGlow)"/>
+
+  <!-- Isometric stack of three diamond layers (the AI stack: model -> harness ->
+       infrastructure), drawn bottom -> top. wx=250, wy=100, thickness t=48.
+       Tone ramps light-teal (top) -> cyan -> brand-blue (bottom) so the three
+       bands stay distinct even at 16px. -->
+  <g stroke="#0a1422" stroke-width="8" stroke-linejoin="round">
+    <!-- bottom layer (ty=760) — brand blue -->
+    <polygon points="262,760 512,660 762,760 512,860" fill="#7c9cff"/>
+    <polygon points="262,760 512,860 512,908 262,808" fill="#5571d6"/>
+    <polygon points="512,860 762,760 762,808 512,908" fill="#3d50ab"/>
+    <!-- middle layer (ty=480) — cyan-blue -->
+    <polygon points="262,480 512,380 762,480 512,580" fill="#6ec1ec"/>
+    <polygon points="262,480 512,580 512,628 262,528" fill="#3e8fcf"/>
+    <polygon points="512,580 762,480 762,528 512,628" fill="#2a6ba6"/>
+    <!-- top layer (ty=200) — bright teal -->
+    <polygon points="262,200 512,100 762,200 512,300" fill="#7becdb"/>
+    <polygon points="262,200 512,300 512,348 262,248" fill="#34bda6"/>
+    <polygon points="512,300 762,200 762,248 512,348" fill="#1f9082"/>
+  </g>
+</svg>

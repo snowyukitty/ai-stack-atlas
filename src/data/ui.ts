@@ -59,6 +59,7 @@ export const ui = {
     noResults: { zh: '没有匹配的产品。', en: 'No matching products.', ja: '一致する製品がありません。' },
     showing: { zh: '显示', en: 'Showing', ja: '表示' },
     results: { zh: '个产品', en: 'products', ja: '件' },
+    result: { zh: '个产品', en: 'product', ja: '件' },
     openSource: { zh: '开源', en: 'Open source', ja: 'オープンソース' },
     partialOpen: { zh: '部分开源', en: 'Source-available', ja: '一部公開' },
     closed: { zh: '闭源', en: 'Proprietary', ja: 'プロプライエタリ' },

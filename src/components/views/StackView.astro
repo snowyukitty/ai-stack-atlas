@@ -56,7 +56,7 @@ const cliSetup = [
         ja: '自作 AI agent 基盤／agent automation stack——これらを直接「coding agent」と呼ばない。',
       }} /></p>
     </div>
-    <div class="grid cols-2">{mine.map((p) => <ProductCard p={p} />)}</div>
+    <div class="grid cols-2">{mine.map((p) => <ProductCard p={p} idPrefix="stack-p" />)}</div>
 
     <div class="note" style="margin-top:1.2rem;"><L t={{
       zh: '履历写法：Built custom AI agent infrastructure, including OpenClaw, a self-hosted multi-provider AI gateway, and Hermes Agent, a workflow automation agent.',

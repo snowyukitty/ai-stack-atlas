@@ -10,7 +10,7 @@ no server, no Node, fully offline, copy it to a USB stick or send it to anyone.
 Astro is only the authoring/build tool — content stays **data-driven** so it's easy
 to **keep up to date**.
 
-> Data last reconciled against public sources: **2026-06-15**
+> Data last reconciled against public sources: **2026-06-18**
 > (Terminal-Bench 2.1, SWE-bench Pro, Artificial Analysis Index, vendor announcements).
 
 ---
@@ -30,9 +30,14 @@ npm install
 npm run open     # build the single file AND open it in your browser
 npm run build    # build only → dist/index.html (the whole site, one file)
 npm run dev      # optional: live-reload dev server at http://localhost:4321 while editing
+npm run verify   # validate data + type-check + build (run before committing)
 ```
 
-Requires Node 18+ (developed on Node 22). `npm install` is only needed once.
+`npm run verify` chains `validate:data` (data-integrity checks: unique ids, valid
+references, even locale keys, sane `LAST_UPDATED`), `check` (`astro check`), and
+`build`. CI runs the same steps on every push.
+
+Requires Node 22.12+ (Astro 7's minimum; developed on Node 22). `npm install` is only needed once.
 
 ---
 
@@ -58,6 +63,11 @@ src/
   layouts/Base.astro   · <head>, inlined favicon, lang/theme + single-page router scripts
   pages/index.astro    · the ONLY page — composes all five views into one file
   styles/global.css    · theming (--vars), i18n toggle, all styling
+brand/
+  icon.svg             · icon master (isometric stack of three diamond layers)
+  icon.ico             · multi-size icon for the Windows desktop shortcut
+scripts/
+  validate-data.mjs    · data-integrity checks (npm run validate:data)
 ```
 
 All five views render into the one page; a tiny inline router (`Base.astro`) shows one
@@ -116,6 +126,27 @@ It's static — `dist/` works on any static host.
 - **Vercel / Netlify / Cloudflare Pages:** framework preset "Astro",
   build `npm run build`, output `dist`.
 - **Anywhere:** copy `dist/` to any web root.
+
+---
+
+## Brand / icon
+
+The favicon is an **isometric stack of three diamond layers** (model → harness →
+infrastructure) in the brand teal→blue gradient. The master lives at
+`brand/icon.svg` and is inlined into `<head>` as a data URI (so the single file
+stays self-contained). It was authored with the **ai-iconflow** toolkit
+(`python -m iconflow` — SVG master → render-and-review loop → packed icon sets).
+
+To regenerate after editing `brand/icon.svg`:
+
+```bash
+python -m iconflow review brand/icon.svg                 # eyeball it at 16–256px
+python -m iconflow build  brand/icon.svg --out brand/out --targets web      # favicon set
+python -m iconflow build  brand/icon.svg --out brand/out-app --targets electron  # multi-size icon.ico
+```
+
+then re-encode `brand/out/favicon.svg` as the data URI in `src/layouts/Base.astro`.
+`brand/icon.ico` (used by the Windows desktop shortcut) comes from the electron build.
 
 ---
 

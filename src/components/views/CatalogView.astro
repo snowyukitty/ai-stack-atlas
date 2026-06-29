@@ -24,7 +24,7 @@ const total = products.length;
     </div>
 
     <div class="toolbar">
-      <input class="search" id="search" type="search" placeholder="" autocomplete="off" />
+      <input class="search" id="search" type="search" placeholder="" autocomplete="off" aria-label={ui.labels.search.en} />
       <div class="filters" id="filters">
         <button class="chip" data-cat="all" aria-pressed="true"><L t={ui.labels.all} /></button>
         {categories.map((c) => (
@@ -59,27 +59,34 @@ const total = products.length;
       placeholders: { zh: ui.labels.search.zh, en: ui.labels.search.en, ja: ui.labels.search.ja },
       showingL: { zh: ui.labels.showing.zh, en: ui.labels.showing.en, ja: ui.labels.showing.ja },
       resultsL: { zh: ui.labels.results.zh, en: ui.labels.results.en, ja: ui.labels.results.ja },
+      resultOneL: { zh: ui.labels.result.zh, en: ui.labels.result.en, ja: ui.labels.result.ja },
     }}
   >
+    // @ts-nocheck
     (function () {
       var root = document.documentElement;
       var search = document.getElementById('search');
       var filters = document.getElementById('filters');
-      var cards = Array.prototype.slice.call(document.querySelectorAll('[data-product]'));
-      var sections = Array.prototype.slice.call(document.querySelectorAll('[data-cat-section]'));
+      var catalog = document.getElementById('catalog');
+      var cards = Array.prototype.slice.call(catalog.querySelectorAll('[data-product]'));
+      var sections = Array.prototype.slice.call(catalog.querySelectorAll('[data-cat-section]'));
       var rcount = document.getElementById('rcount');
       var empty = document.getElementById('empty');
       var activeCat = 'all';
 
       function curLang() { return root.getAttribute('data-lang') || 'zh'; }
-      function setPlaceholder() { search.placeholder = placeholders[curLang()] || placeholders.en; }
+      function setPlaceholder() {
+        var p = placeholders[curLang()] || placeholders.en;
+        search.placeholder = p;
+        search.setAttribute('aria-label', p);
+      }
 
       function apply() {
         var q = (search.value || '').trim().toLowerCase();
         var shown = 0;
         cards.forEach(function (card) {
           var okCat = activeCat === 'all' || card.getAttribute('data-cat') === activeCat;
-          var okQ = !q || card.getAttribute('data-haystack').indexOf(q) !== -1;
+          var okQ = !q || (card.getAttribute('data-haystack') || '').indexOf(q) !== -1;
           var show = okCat && okQ;
           card.style.display = show ? '' : 'none';
           if (show) shown++;
@@ -91,7 +98,8 @@ const total = products.length;
           sec.style.display = any ? '' : 'none';
         });
         empty.hidden = shown !== 0;
-        rcount.textContent = (showingL[curLang()] || 'Showing') + ' ' + shown + ' ' + (resultsL[curLang()] || '');
+        var noun = shown === 1 ? (resultOneL[curLang()] || '') : (resultsL[curLang()] || '');
+        rcount.textContent = (showingL[curLang()] || 'Showing') + ' ' + shown + ' ' + noun;
       }
 
       function setCat(cat) {
