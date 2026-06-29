@@ -1,7 +1,7 @@
 import type { Product } from '../lib/types';
 
 /** When the dataset was last reconciled against public sources. */
-export const LAST_UPDATED = '2026-06-15';
+export const LAST_UPDATED = '2026-06-18';
 
 /**
  * The catalog. To update: edit / add an entry below and rebuild.
@@ -46,7 +46,7 @@ export const products: Product[] = [
     ],
     bestFor: { zh: '大型重构、遗留迁移、需要可靠推理的重活', en: 'Big refactors, legacy migration, heavy work needing reliable reasoning', ja: '大規模リファクタ・レガシー移行・信頼性重視の重作業' },
     links: [
-      { label: 'Docs', url: 'https://docs.claude.com/en/docs/claude-code' },
+      { label: 'Docs', url: 'https://code.claude.com/docs' },
       { label: 'Anthropic', url: 'https://www.anthropic.com' },
     ],
     tags: ['cli', 'anthropic', 'mcp', 'flagship'],
@@ -475,7 +475,7 @@ export const products: Product[] = [
       { zh: '配置 / 上手门槛偏高', en: 'Higher setup / learning curve', ja: '設定・学習コストが高め' },
     ],
     bestFor: { zh: '研究、自托管自动化、想自己造智能体', en: 'Research, self-hosted automation, building your own agent', ja: '研究・自己ホスト自動化・自作エージェント' },
-    links: [{ label: 'OpenHands', url: 'https://github.com/All-Hands-AI/OpenHands' }],
+    links: [{ label: 'OpenHands', url: 'https://github.com/OpenHands/OpenHands' }],
     tags: ['cli', 'open-source', 'autonomous', 'sdk'],
   },
   {
@@ -508,7 +508,7 @@ export const products: Product[] = [
       { zh: '可控性 / 透明度不如本地 CLI', en: 'Less control/transparency than local CLIs', ja: '制御性・透明性はローカル CLI に劣る' },
     ],
     bestFor: { zh: '想把成块任务完全外包的人', en: 'People wanting to fully outsource chunks of work', ja: 'まとまった作業を完全委任したい人' },
-    links: [{ label: 'Cognition', url: 'https://cognition.ai' }],
+    links: [{ label: 'Cognition', url: 'https://cognition.com' }],
     tags: ['cloud', 'autonomous', 'async'],
   },
   {
@@ -675,7 +675,7 @@ export const products: Product[] = [
       { zh: '与 Cursor 高度同质化竞争', en: 'Highly overlapping competition with Cursor', ja: 'Cursor と高度に同質化した競争' },
     ],
     bestFor: { zh: '想试 Cursor 替代的编辑器派', en: 'Editor-camp users seeking a Cursor alternative', ja: 'Cursor 代替を探すエディタ派' },
-    links: [{ label: 'Windsurf', url: 'https://windsurf.com' }],
+    links: [{ label: 'Windsurf', url: 'https://devin.ai/desktop' }],
     tags: ['ide', 'multi-model'],
   },
   {

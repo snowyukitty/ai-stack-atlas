@@ -10,7 +10,7 @@ interface Props {
   block?: boolean;
   class?: string;
 }
-const { t, as = 'span', block = false, class: cls = '' } = Astro.props;
+const { t, as = 'span', block = false, class: cls = '' } = Astro.props as Props;
 const Tag = as as any;
 const wrapClass = (block ? 'i18n-block' : 'i18n') + (cls ? ' ' + cls : '');
 ---

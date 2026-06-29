@@ -61,14 +61,17 @@ const countByCat = (id: string) => products.filter((p) => p.category === id).len
       <h2><L t={{ zh: '按类别浏览', en: 'Browse by category', ja: 'カテゴリで見る' }} /></h2>
     </div>
     <div class="grid cols-cat">
-      {categories.map((c) => (
-        <a class="card cat-card" href="#catalog" data-go="catalog" data-cat={c.id}>
-          <span class="emoji">{c.icon}</span>
-          <h3><L t={c.short} /></h3>
-          <p><L t={c.blurb} /></p>
-          <span class="count">{countByCat(c.id)} <L t={ui.labels.results} /></span>
-        </a>
-      ))}
+      {categories.map((c) => {
+        const n = countByCat(c.id);
+        return (
+          <a class="card cat-card" href="#catalog" data-go="catalog" data-cat={c.id}>
+            <span class="emoji">{c.icon}</span>
+            <h3><L t={c.short} /></h3>
+            <p><L t={c.blurb} /></p>
+            <span class="count">{n} <L t={n === 1 ? ui.labels.result : ui.labels.results} /></span>
+          </a>
+        );
+      })}
     </div>
   </section>
 
@@ -83,7 +86,7 @@ const countByCat = (id: string) => products.filter((p) => p.category === id).len
       }} /></p>
     </div>
     <div class="grid cols-2">
-      {featured.map((p) => <ProductCard p={p} />)}
+      {featured.map((p) => <ProductCard p={p} idPrefix="home-p" />)}
     </div>
   </section>
 </section>
