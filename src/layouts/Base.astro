@@ -19,6 +19,10 @@ const desc =
 const canonical = Astro.site
   ? new URL(import.meta.env.BASE_URL, Astro.site).href
   : undefined;
+// Social-share card (1200x630). Lives at <site>/og.png (public/og.png, generated
+// by brand/make-og.mjs). Absolute URL so scrapers can fetch it; only emitted when
+// `site` is configured (the offline file:// build has no canonical host).
+const ogImage = canonical ? new URL('og.png', canonical).href : undefined;
 
 // Favicon inlined as a data URI so the single file needs no external assets.
 // Source master: brand/icon.svg (built with ai-iconflow). An isometric stack of
@@ -39,11 +43,20 @@ const favicon =
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={desc} />
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="AI Stack Atlas" />
+    <meta property="og:locale" content="zh_CN" />
+    <meta property="og:locale:alternate" content="en_US" />
+    <meta property="og:locale:alternate" content="ja_JP" />
     {canonical && <link rel="canonical" href={canonical} />}
     {canonical && <meta property="og:url" content={canonical} />}
-    <meta name="twitter:card" content="summary" />
+    {ogImage && <meta property="og:image" content={ogImage} />}
+    {ogImage && <meta property="og:image:width" content="1200" />}
+    {ogImage && <meta property="og:image:height" content="630" />}
+    {ogImage && <meta property="og:image:alt" content="AI Stack Atlas — a trilingual field guide to the modern AI stack" />}
+    <meta name="twitter:card" content={ogImage ? 'summary_large_image' : 'summary'} />
     <meta name="twitter:title" content={fullTitle} />
     <meta name="twitter:description" content={desc} />
+    {ogImage && <meta name="twitter:image" content={ogImage} />}
     <meta name="color-scheme" content="dark light" />
     <meta name="theme-color" content="#0b0e14" media="(prefers-color-scheme: dark)" />
     <meta name="theme-color" content="#f6f8fc" media="(prefers-color-scheme: light)" />

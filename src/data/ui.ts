@@ -23,6 +23,7 @@ export const ui = {
   nav: {
     home: { zh: '首页', en: 'Home', ja: 'ホーム' },
     catalog: { zh: '产品图鉴', en: 'Catalog', ja: 'カタログ' },
+    compare: { zh: '对比', en: 'Compare', ja: '比較' },
     concepts: { zh: '概念解析', en: 'Concepts', ja: '概念' },
     rankings: { zh: '排名 / 评测', en: 'Rankings', ja: 'ランキング' },
     stack: { zh: '我的 Stack', en: 'My Stack', ja: 'My Stack' },

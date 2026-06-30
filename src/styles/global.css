@@ -229,6 +229,46 @@ html[data-lang="ja"] .i18n-block > [lang="ja"] { display: block; }
   -webkit-background-clip: text; background-clip: text; color: transparent;
 }
 
+/* by-the-numbers stat strip */
+.statbar {
+  display: flex; flex-wrap: wrap; gap: 0.6rem 1.6rem; margin-top: 1.8rem;
+  padding-top: 1.2rem; border-top: 1px solid var(--border-soft);
+}
+.stat { display: flex; flex-direction: column; }
+.stat .num { font-size: 1.5rem; font-weight: 800; letter-spacing: -0.02em; color: var(--text);
+  background: linear-gradient(120deg, var(--accent), var(--accent-2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.stat .num.upd { font-size: 1.05rem; font-family: var(--font-mono); -webkit-text-fill-color: var(--text-soft); }
+.stat .lab { font-size: 0.74rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 700; }
+
+/* layered stack diagram */
+.layers { display: flex; flex-direction: column; gap: 0.4rem; margin-top: 0.6rem; }
+.layer {
+  display: flex; align-items: center; gap: 0.7rem; flex-wrap: wrap;
+  border: 1px solid var(--border); border-left-width: 4px; border-radius: var(--radius-sm);
+  padding: 0.7rem 0.9rem; background: var(--surface);
+}
+.layer .ly-ico { font-size: 1.25rem; }
+.layer .ly-name { font-weight: 700; font-size: 0.95rem; }
+.layer .ly-eg { display: flex; flex-wrap: wrap; gap: 0.3rem; margin-left: auto; }
+.layer .ly-eg code { background: var(--surface-2); border: 1px solid var(--border-soft); color: var(--text-soft); font-size: 0.72rem; }
+.layer.tone-a { border-left-color: var(--accent-2); }
+.layer.tone-b { border-left-color: var(--accent); }
+.layer.tone-c { border-left-color: var(--accent-3); }
+.layer.tone-d { border-left-color: var(--warn); }
+.ly-cap { font-size: 0.82rem; color: var(--text-soft); margin: 0.5rem 0 0; }
+@media (max-width: 600px) { .layer .ly-eg { margin-left: 0; flex-basis: 100%; } }
+
+/* category distribution bar chart */
+.catbars { display: flex; flex-direction: column; gap: 0.55rem; margin-bottom: var(--gap); }
+.catbar { display: grid; grid-template-columns: minmax(8.5em, 13em) 1fr auto; align-items: center; gap: 0.7rem; color: var(--text); }
+.catbar:hover { text-decoration: none; }
+.catbar:hover .cb-fill { filter: brightness(1.12); }
+.cb-name { font-size: 0.86rem; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.cb-track { height: 0.7rem; background: var(--surface-2); border: 1px solid var(--border-soft); border-radius: 999px; overflow: hidden; }
+.cb-fill { display: block; height: 100%; border-radius: 999px; background: linear-gradient(90deg, var(--accent), var(--accent-2)); }
+.cb-num { font-variant-numeric: tabular-nums; font-weight: 800; font-size: 0.86rem; color: var(--text-soft); min-width: 1.6em; text-align: right; }
+@media (max-width: 480px) { .catbar { grid-template-columns: minmax(7em, 9em) 1fr auto; gap: 0.5rem; } }
+
 /* ============================================================
    Sections / cards
    ============================================================ */
@@ -371,6 +411,55 @@ table.rank td .rk {
 table.rank tr:first-child td .rk { background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: #06121f; }
 table.rank td a { font-weight: 700; }
 .tag-pill { display: inline-block; font-size: 0.7rem; color: var(--text-dim); }
+
+/* benchmark bars */
+table.rank.bench .bar-col { width: 48%; }
+.axis-hint { display: block; font-size: 0.66rem; color: var(--text-dim); font-weight: 600; letter-spacing: 0; text-transform: none; margin-top: 0.1rem; }
+.barwrap { display: flex; align-items: center; gap: 0.6rem; }
+.bar {
+  position: relative; flex: 1; min-width: 60px; height: 0.62rem;
+  background: var(--surface-2); border: 1px solid var(--border-soft);
+  border-radius: 999px; overflow: hidden;
+}
+.bar-fill {
+  display: block; height: 100%; border-radius: 999px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+}
+table.rank.bench tr:first-child .bar-fill { background: linear-gradient(90deg, var(--accent-2), var(--good)); }
+.bar-label { flex: 0 0 auto; font-variant-numeric: tabular-nums; font-weight: 700; font-size: 0.84rem; color: var(--text); min-width: 3.2em; }
+@media (max-width: 560px) {
+  .barwrap { flex-direction: column; align-items: stretch; gap: 0.25rem; }
+  .bar-label { font-size: 0.78rem; }
+}
+
+/* ============================================================
+   Compare matrices
+   ============================================================ */
+.cmp-h { margin: 0 0 0.8rem; font-size: 1.05rem; }
+.matrix-scroll { overflow-x: auto; border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); }
+.matrix-scroll::-webkit-scrollbar { height: 8px; }
+.matrix-scroll::-webkit-scrollbar-thumb { background: var(--border); border-radius: 999px; }
+table.matrix { width: 100%; border-collapse: collapse; font-size: 0.86rem; min-width: 600px; }
+table.matrix th, table.matrix td { text-align: left; padding: 0.6rem 0.8rem; border-bottom: 1px solid var(--border-soft); vertical-align: top; }
+table.matrix thead th {
+  position: sticky; top: 0; z-index: 1;
+  background: var(--surface-2); color: var(--text-dim);
+  font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; white-space: nowrap;
+}
+table.matrix .th-sub { text-transform: none; letter-spacing: 0; color: var(--text-dim); font-weight: 600; }
+table.matrix tbody th[scope="row"] { font-weight: 700; }
+table.matrix tbody th[scope="row"] a { font-weight: 800; }
+table.matrix tbody th .vendor { display: block; font-weight: 600; font-size: 0.74rem; color: var(--text-dim); }
+table.matrix tbody tr:hover { background: color-mix(in srgb, var(--accent) 7%, transparent); }
+table.matrix td { color: var(--text-soft); font-variant-numeric: tabular-nums; }
+table.matrix td.nowrap { white-space: nowrap; }
+table.matrix td.models { color: var(--text-dim); font-size: 0.8rem; min-width: 12em; }
+table.matrix td.rate { color: var(--warn); letter-spacing: 1px; white-space: nowrap; }
+table.matrix tr.is-sunset th[scope="row"] a { color: var(--text-soft); }
+table.matrix tr.is-sunset { opacity: 0.72; }
+.lic { font-size: 0.72rem; font-weight: 700; padding: 0.12rem 0.46rem; border-radius: 999px; border: 1px solid var(--border); color: var(--text-soft); background: var(--surface-2); white-space: nowrap; }
+.lic.open { color: var(--good); border-color: color-mix(in srgb, var(--good) 40%, var(--border)); }
+.lic.partial { color: var(--warn); border-color: color-mix(in srgb, var(--warn) 40%, var(--border)); }
 
 /* ============================================================
    Footer

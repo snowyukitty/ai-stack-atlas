@@ -1,7 +1,7 @@
 import type { Product } from '../lib/types';
 
 /** When the dataset was last reconciled against public sources. */
-export const LAST_UPDATED = '2026-06-18';
+export const LAST_UPDATED = '2026-06-30';
 
 /**
  * The catalog. To update: edit / add an entry below and rebuild.
@@ -32,8 +32,8 @@ export const products: Product[] = [
     status: 'active',
     rating: 5,
     benchmarks: [
-      { label: 'SWE-bench Pro (Opus 4.8)', value: '69.2% · #1' },
-      { label: 'Terminal-Bench 2.1', value: '78.9% · #2' },
+      { label: 'SWE-bench Pro (Opus 4.8)', value: '69.2% · #2' },
+      { label: 'Terminal-Bench 2.1', value: '78.9% · #3' },
     ],
     pros: [
       { zh: '深度推理与大改造能力最强，少出「假对」编辑', en: 'Best deep reasoning & large-refactor reliability; fewer false-correct edits', ja: '深い推論と大規模改修が最強、誤った編集が少ない' },
@@ -65,9 +65,9 @@ export const products: Product[] = [
       ja: 'トークン効率とサンドボックスに優れ、無人実行に強い。',
     },
     description: {
-      zh: 'OpenAI 官方编程 CLI，由 GPT-5.5 驱动。Terminal-Bench 2.1 公榜第一（83.4%）。同样工作量下 token 用量明显低于 Claude Code，沙箱执行更保守安全，适合「交给它、自己去忙别的」。',
-      en: 'OpenAI\'s official coding CLI, powered by GPT-5.5. #1 on the public Terminal-Bench 2.1 leaderboard (83.4%). Notably leaner on tokens than Claude Code for the same work, with conservative sandboxed execution — great for "hand it off and walk away".',
-      ja: 'OpenAI 公式コーディング CLI（GPT-5.5 駆動）。Terminal-Bench 2.1 公開リーダーボードで首位（83.4%）。同等作業でのトークン消費が Claude Code より明確に少なく、保守的なサンドボックス実行で「任せて離席」に向く。',
+      zh: 'OpenAI 官方编程 CLI，由 GPT-5.5 驱动。Terminal-Bench 2.1 公榜第二（83.4%，仅次于 Claude Fable 5）。同样工作量下 token 用量明显低于 Claude Code，沙箱执行更保守安全，适合「交给它、自己去忙别的」。',
+      en: 'OpenAI\'s official coding CLI, powered by GPT-5.5. #2 on the public Terminal-Bench 2.1 leaderboard (83.4%, behind Claude Fable 5). Notably leaner on tokens than Claude Code for the same work, with conservative sandboxed execution — great for "hand it off and walk away".',
+      ja: 'OpenAI 公式コーディング CLI（GPT-5.5 駆動）。Terminal-Bench 2.1 公開リーダーボードで 2 位（83.4%、Claude Fable 5 に次ぐ）。同等作業でのトークン消費が Claude Code より明確に少なく、保守的なサンドボックス実行で「任せて離席」に向く。',
     },
     models: ['GPT-5.5', 'GPT-5.5-Codex'],
     pricing: { zh: 'ChatGPT 订阅或 API 计费', en: 'ChatGPT subscription or API usage', ja: 'ChatGPT サブスクまたは API 従量' },
@@ -75,12 +75,12 @@ export const products: Product[] = [
     status: 'active',
     rating: 5,
     benchmarks: [
-      { label: 'Terminal-Bench 2.1', value: '83.4% · #1' },
+      { label: 'Terminal-Bench 2.1', value: '83.4% · #2' },
     ],
     pros: [
       { zh: 'token 效率高，长任务更省成本', en: 'Token-efficient; cheaper on long tasks', ja: 'トークン効率が高く長時間タスクで割安' },
       { zh: '沙箱安全模型成熟，适合无人值守', en: 'Mature sandbox safety; good for unattended runs', ja: 'サンドボックス安全性が成熟、無人実行向き' },
-      { zh: 'Terminal-Bench 榜首，工具执行扎实', en: 'Tops Terminal-Bench; solid tool execution', ja: 'Terminal-Bench 首位、ツール実行が堅実' },
+      { zh: 'Terminal-Bench 工具执行扎实（次于 Fable 5）', en: 'Solid Terminal-Bench tool execution (#2, behind Fable 5)', ja: 'Terminal-Bench のツール実行が堅実（Fable 5 に次ぐ）' },
     ],
     cons: [
       { zh: '极复杂、跨依赖推理略逊 Claude Code', en: 'Slightly behind Claude Code on very complex cross-dependency reasoning', ja: '超複雑な依存横断の推論は Claude Code にやや劣る' },
@@ -1593,20 +1593,60 @@ export const products: Product[] = [
 
   // ───────────────────────── Foundation Models ─────────────────────────
   {
+    id: 'claude-fable-5',
+    name: 'Claude Fable 5',
+    vendor: 'Anthropic',
+    category: 'model',
+    subtype: { zh: '前沿模型（编程基准榜首）', en: 'Frontier model (tops coding benchmarks)', ja: 'フロンティアモデル（コーディング基準で首位）' },
+    tagline: {
+      zh: 'Anthropic 新旗舰，编程基准登顶，凌驾 Opus 之上。',
+      en: "Anthropic's new flagship — tops the coding benchmarks, sitting above Opus.",
+      ja: 'Anthropic の新旗艦。コーディング基準で首位、Opus の上に立つ。',
+    },
+    description: {
+      zh: '2026 年 6 月 9 日发布，源自 Anthropic 的「Mythos」高阶层，定位在 Opus 家族之上。登顶 Terminal-Bench 2.1（88.0%）与 SWE-bench Pro（80.3%），1M 上下文。价格 $10/$50（约 Opus 4.8 的两倍）。带安全回退：被标记的高风险查询会路由回 Opus 4.8，因此综合 AA 智能指数约 60，略低于 Opus（61.4）。适合最硬的编程 / agent 任务、且能接受溢价的场景。',
+      en: 'Released 2026-06-09 from Anthropic\'s "Mythos" tier, positioned above the Opus family. Tops Terminal-Bench 2.1 (88.0%) and SWE-bench Pro (80.3%) with a 1M context. Priced $10/$50 (~2× Opus 4.8). A safety fallback routes flagged high-risk queries back to Opus 4.8, which is why its composite AA Intelligence Index sits at ~60, just under Opus (61.4). Best for the hardest coding/agentic jobs where the premium is acceptable.',
+      ja: '2026 年 6 月 9 日公開。Anthropic の「Mythos」上位層に由来し、Opus 家族の上に位置づけ。Terminal-Bench 2.1（88.0%）と SWE-bench Pro（80.3%）で首位、文脈 1M。価格は $10/$50（Opus 4.8 の約 2 倍）。安全回退があり、フラグされた高リスク照会は Opus 4.8 へ回されるため、総合 AA 知能指数は約 60 と Opus（61.4）をやや下回る。最難のコーディング／agent 業務で割増を許容できる場面に好適。',
+    },
+    models: ['—'],
+    pricing: { zh: '$10 / $50 每百万 token', en: '$10 / $50 per 1M tokens', ja: '$10 / $50 / 百万トークン' },
+    license: 'closed',
+    status: 'active',
+    // TODO(owner): set a personal rating (0–5) — left unset pending your call.
+    benchmarks: [
+      { label: 'Terminal-Bench 2.1', value: '88.0% · #1' },
+      { label: 'SWE-bench Pro', value: '80.3% · #1' },
+      { label: 'AA Intelligence Index', value: '~60 · #3' },
+      { label: 'Context', value: '1.0M' },
+    ],
+    pros: [
+      { zh: '编程 / agent 原始基准登顶', en: 'Tops the raw coding/agentic benchmarks', ja: '生のコーディング／agent ベンチで首位' },
+      { zh: '大规模真实改造吞吐惊人', en: 'Huge throughput on large real-world refactors', ja: '大規模な実改修のスループットが圧倒的' },
+    ],
+    cons: [
+      { zh: '价格高（$10/$50，约 Opus 两倍）', en: 'Expensive ($10/$50, ~2× Opus)', ja: '高価（$10/$50、Opus の約 2 倍）' },
+      { zh: '安全回退会把部分查询转回 Opus 4.8；综合 AA 指数略低于 Opus', en: 'Safety fallback reroutes some queries to Opus 4.8; composite AA Index just below Opus', ja: '安全回退で一部照会が Opus 4.8 へ；総合 AA 指数は Opus をやや下回る' },
+    ],
+    bestFor: { zh: '最硬的编程 / agent 任务、可接受溢价', en: 'The hardest coding/agentic jobs, premium acceptable', ja: '最難のコーディング／agent 業務・割増許容' },
+    links: [{ label: 'Anthropic', url: 'https://www.anthropic.com/claude' }],
+    tags: ['model', 'anthropic', 'frontier', 'coding'],
+    featured: true,
+  },
+  {
     id: 'claude-opus-48',
     name: 'Claude Opus 4.8',
     vendor: 'Anthropic',
     category: 'model',
     subtype: { zh: '前沿模型（编程 / agent 最强）', en: 'Frontier model (best for coding/agentic)', ja: 'フロンティアモデル（コーディング／agent 最強）' },
     tagline: {
-      zh: '2026 年中综合最强模型，编程 / agent 标杆。',
-      en: 'The best overall model in mid-2026; the bar for coding/agentic work.',
-      ja: '2026 年半ばの総合最強。コーディング／agent の基準。',
+      zh: 'AA 综合指数第一，编程 / agent 全能旗舰。',
+      en: 'Tops the AA Intelligence Index; an all-round coding/agentic flagship.',
+      ja: 'AA 知能指数で首位。コーディング／agent の万能旗艦。',
     },
     description: {
-      zh: 'Anthropic 旗舰。截至 2026 年 6 月领跑 Artificial Analysis 智能指数（61.4），在编程与 agent 两类最关键基准上领先。SWE-bench Pro 69.2% 居首。价格 $5/$25（每百万 token 输入/输出），1M 上下文；Fast 模式 $10/$50，比上代便宜约三倍。',
-      en: "Anthropic's flagship. As of June 2026 it leads the Artificial Analysis Intelligence Index (61.4) and tops the two benchmarks that matter most for agentic/coding work, with SWE-bench Pro at 69.2% (#1). Priced $5/$25 per million input/output tokens, 1M context; Fast mode $10/$50, ~3× cheaper than the prior generation.",
-      ja: 'Anthropic の旗艦。2026 年 6 月時点で Artificial Analysis 知能指数（61.4）を首位とし、agent／コーディングで最重要の 2 ベンチでリード。SWE-bench Pro 69.2% で首位。価格は $5/$25（百万トークン入/出）、文脈 1M。Fast モードは $10/$50 で前世代比約 3 倍安。',
+      zh: 'Anthropic 旗舰。截至 2026 年 6 月领跑 Artificial Analysis 智能指数（61.4）。原始编程基准现已被新出的 Claude Fable 5 超过（SWE-bench Pro 69.2%，第二），但综合智能仍居首。价格 $5/$25（每百万 token 输入/输出），1M 上下文；Fast 模式 $10/$50，比上代便宜约三倍。',
+      en: "Anthropic's flagship. As of June 2026 it leads the Artificial Analysis Intelligence Index (61.4). On raw coding benchmarks it now sits just behind the new Claude Fable 5 (SWE-bench Pro 69.2%, #2), but it still tops the overall Index. Priced $5/$25 per million input/output tokens, 1M context; Fast mode $10/$50, ~3× cheaper than the prior generation.",
+      ja: 'Anthropic の旗艦。2026 年 6 月時点で Artificial Analysis 知能指数（61.4）を首位とする。生のコーディングベンチでは新登場の Claude Fable 5 にやや及ばない（SWE-bench Pro 69.2%、2 位）が、総合指数では依然首位。価格は $5/$25（百万トークン入/出）、文脈 1M。Fast モードは $10/$50 で前世代比約 3 倍安。',
     },
     models: ['—'],
     pricing: { zh: '$5 / $25 每百万 token（Fast $10/$50）', en: '$5 / $25 per 1M tokens (Fast $10/$50)', ja: '$5 / $25 / 百万トークン（Fast $10/$50）' },
@@ -1615,11 +1655,11 @@ export const products: Product[] = [
     rating: 5,
     benchmarks: [
       { label: 'AA Intelligence Index', value: '61.4 · #1' },
-      { label: 'SWE-bench Pro', value: '69.2% · #1' },
+      { label: 'SWE-bench Pro', value: '69.2% · #2' },
       { label: 'Context', value: '1.0M' },
     ],
     pros: [
-      { zh: '编程 / agent 综合最强', en: 'Best overall coding/agentic', ja: 'コーディング／agent 総合最強' },
+      { zh: 'AA 综合指数第一', en: 'Tops the AA Intelligence Index', ja: 'AA 知能指数で総合首位' },
       { zh: '输入价低于 GPT-5.5', en: 'Input price below GPT-5.5', ja: '入力単価が GPT-5.5 より安い' },
     ],
     cons: [
@@ -1637,14 +1677,14 @@ export const products: Product[] = [
     category: 'model',
     subtype: { zh: '前沿模型', en: 'Frontier model', ja: 'フロンティアモデル' },
     tagline: {
-      zh: '综合次席，Terminal-Bench 工具执行第一。',
-      en: 'A close #2 overall; #1 on Terminal-Bench tool execution.',
-      ja: '総合 2 位、Terminal-Bench のツール実行は首位。',
+      zh: '综合次席，Terminal-Bench 工具执行第二。',
+      en: 'A close #2 overall; #2 on Terminal-Bench tool execution.',
+      ja: '総合 2 位、Terminal-Bench のツール実行は 2 位。',
     },
     description: {
-      zh: 'OpenAI 旗舰。AA 智能指数 60.2 紧随 Opus 4.8。驱动 Codex CLI 拿下 Terminal-Bench 2.1 第一（83.4%）。价格约 $10/$40，1.1M 上下文。综合编程深度略逊 Opus，但工具执行与 token 效率出色。',
-      en: "OpenAI's flagship. AA Intelligence Index 60.2, just behind Opus 4.8. Powers Codex CLI to #1 on Terminal-Bench 2.1 (83.4%). Priced ~$10/$40, 1.1M context. Slightly behind Opus on overall coding depth, but excellent at tool execution and token efficiency.",
-      ja: 'OpenAI の旗艦。AA 知能指数 60.2 で Opus 4.8 に僅差。Codex CLI を Terminal-Bench 2.1 首位（83.4%）に導く。価格約 $10/$40、文脈 1.1M。総合コーディング深度は Opus にやや劣るが、ツール実行とトークン効率に優れる。',
+      zh: 'OpenAI 旗舰。AA 智能指数 60.2 紧随 Opus 4.8。驱动 Codex CLI 在 Terminal-Bench 2.1 拿下第二（83.4%，仅次于 Claude Fable 5）。价格约 $10/$40，1.1M 上下文。综合编程深度略逊 Opus，但工具执行与 token 效率出色。',
+      en: "OpenAI's flagship. AA Intelligence Index 60.2, just behind Opus 4.8. Powers Codex CLI to #2 on Terminal-Bench 2.1 (83.4%, behind Claude Fable 5). Priced ~$10/$40, 1.1M context. Slightly behind Opus on overall coding depth, but excellent at tool execution and token efficiency.",
+      ja: 'OpenAI の旗艦。AA 知能指数 60.2 で Opus 4.8 に僅差。Codex CLI を Terminal-Bench 2.1 で 2 位（83.4%、Claude Fable 5 に次ぐ）に導く。価格約 $10/$40、文脈 1.1M。総合コーディング深度は Opus にやや劣るが、ツール実行とトークン効率に優れる。',
     },
     models: ['—'],
     pricing: { zh: '~$10 / $40 每百万 token', en: '~$10 / $40 per 1M tokens', ja: '~$10 / $40 / 百万トークン' },
@@ -1653,7 +1693,8 @@ export const products: Product[] = [
     rating: 5,
     benchmarks: [
       { label: 'AA Intelligence Index', value: '60.2 · #2' },
-      { label: 'Terminal-Bench 2.1 (Codex)', value: '83.4% · #1' },
+      { label: 'SWE-bench Pro', value: '58.6% · #3' },
+      { label: 'Terminal-Bench 2.1 (Codex)', value: '83.4% · #2' },
       { label: 'Context', value: '1.1M' },
     ],
     pros: [
@@ -1689,7 +1730,7 @@ export const products: Product[] = [
     status: 'active',
     rating: 4,
     benchmarks: [
-      { label: 'AA Intelligence Index', value: '~57 · #3' },
+      { label: 'AA Intelligence Index', value: '~57 · #4' },
     ],
     pros: [
       { zh: '多模态 / 长上下文强', en: 'Strong multimodal / long context', ja: '多モーダル／長文脈が強い' },
@@ -1724,7 +1765,7 @@ export const products: Product[] = [
     status: 'active',
     rating: 3,
     benchmarks: [
-      { label: 'AA Intelligence Index', value: '~53 · #4' },
+      { label: 'AA Intelligence Index', value: '~53 · #5' },
       { label: 'Context (Grok 4 Fast)', value: '2.0M · largest' },
     ],
     pros: [

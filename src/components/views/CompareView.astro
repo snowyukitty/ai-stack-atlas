@@ -1,0 +1,112 @@
+---
+import L from '../L.astro';
+import { ui } from '../../data/ui';
+import { products } from '../../data/products';
+import type { Product } from '../../lib/types';
+
+const models = products.filter((p) => p.category === 'model');
+const clis = products.filter((p) => p.category === 'coding-cli');
+
+/** Pull a benchmark value off a product by matching its label. */
+const bench = (p: Product, re: RegExp) => p.benchmarks?.find((b) => re.test(b.label))?.value ?? '—';
+
+const licenseLabel = {
+  open: { cls: 'open', t: ui.labels.openSource },
+  partial: { cls: 'partial', t: ui.labels.partialOpen },
+  closed: { cls: '', t: ui.labels.closed },
+};
+
+const link = (p: Product) => '#catalog/p-' + p.id;
+const stars = (r?: number) => (typeof r === 'number' ? '★'.repeat(r) + '☆'.repeat(5 - r) : '—');
+---
+<section class="view" data-view="compare" hidden>
+  <section class="block">
+    <div class="section-head">
+      <p class="kicker"><L t={ui.nav.compare} /></p>
+      <h2><L t={{ zh: '横向对比', en: 'Side-by-side comparison', ja: '横並び比較' }} /></h2>
+      <p><L t={{
+        zh: '把同类产品摊开成一张表，逐列比关键维度。数字随版本变化，点名称可跳到完整卡片。',
+        en: 'The same class of product laid out in one table, column by column on the dimensions that matter. Figures shift with each release; click a name for the full card.',
+        ja: '同種の製品を 1 つの表に並べ、重要な軸を列ごとに比較。数値はリリースごとに変動。名称をクリックで詳細カードへ。',
+      }} /></p>
+    </div>
+
+    {/* ---------- Frontier models ---------- */}
+    <h3 class="cmp-h">🧠 <L t={{ zh: '前沿模型', en: 'Frontier models', ja: 'フロンティアモデル' }} /></h3>
+    <div class="matrix-scroll">
+      <table class="matrix">
+        <thead>
+          <tr>
+            <th><L t={{ zh: '模型', en: 'Model', ja: 'モデル' }} /></th>
+            <th>AA Index</th>
+            <th>SWE-bench Pro</th>
+            <th>Terminal-Bench</th>
+            <th><L t={{ zh: '上下文', en: 'Context', ja: '文脈' }} /></th>
+            <th><L t={ui.labels.pricing} /> <span class="th-sub">$/1M</span></th>
+            <th><L t={ui.labels.license} /></th>
+          </tr>
+        </thead>
+        <tbody>
+          {models.map((p) => (
+            <tr>
+              <th scope="row">
+                <a href={link(p)} data-go="catalog" data-target={'p-' + p.id}>{p.name}</a>
+                <span class="vendor">{p.vendor}</span>
+              </th>
+              <td>{bench(p, /intelligence|aa index/i)}</td>
+              <td>{bench(p, /swe-bench/i)}</td>
+              <td>{bench(p, /terminal/i)}</td>
+              <td>{bench(p, /context/i)}</td>
+              <td class="nowrap"><L t={p.pricing} /></td>
+              <td><span class={`lic ${licenseLabel[p.license].cls}`}><L t={licenseLabel[p.license].t} /></span></td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <p class="src"><L t={{
+      zh: '“#” 为该基准公榜名次。Fable 5 编程基准登顶，但综合 AA 指数略低于 Opus 4.8（安全回退所致）。',
+      en: 'The “#” is the public leaderboard rank for that benchmark. Fable 5 tops the coding benches but its composite AA Index trails Opus 4.8 (due to its safety fallback).',
+      ja: '「#」は各ベンチ公開順位。Fable 5 はコーディングで首位だが、総合 AA 指数は安全回退により Opus 4.8 をやや下回る。',
+    }} /></p>
+
+    <hr class="soft" />
+
+    {/* ---------- CLI coding agents ---------- */}
+    <h3 class="cmp-h">⌨️ <L t={{ zh: 'CLI 编程智能体', en: 'CLI coding agents', ja: 'CLI コーディングエージェント' }} /></h3>
+    <div class="matrix-scroll">
+      <table class="matrix">
+        <thead>
+          <tr>
+            <th><L t={{ zh: '工具', en: 'Tool', ja: 'ツール' }} /></th>
+            <th><L t={ui.labels.command} /></th>
+            <th><L t={ui.labels.models} /></th>
+            <th>Terminal-Bench</th>
+            <th><L t={ui.labels.license} /></th>
+            <th><L t={ui.labels.myRating} /></th>
+          </tr>
+        </thead>
+        <tbody>
+          {clis.map((p) => (
+            <tr class={p.status === 'sunset' ? 'is-sunset' : undefined}>
+              <th scope="row">
+                <a href={link(p)} data-go="catalog" data-target={'p-' + p.id}>{p.name}</a>
+                <span class="vendor">{p.vendor}{p.status === 'sunset' ? ' · ' : ''}{p.status === 'sunset' ? <L t={ui.labels.sunset} /> : ''}</span>
+              </th>
+              <td>{p.command ? <code>{p.command}</code> : '—'}</td>
+              <td class="models">{p.models.join(', ')}</td>
+              <td>{bench(p, /terminal/i)}</td>
+              <td><span class={`lic ${licenseLabel[p.license].cls}`}><L t={licenseLabel[p.license].t} /></span></td>
+              <td class="rate" title={typeof p.rating === 'number' ? `${p.rating}/5` : ''}>{stars(p.rating)}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <p class="src"><L t={{
+      zh: '评分为个人主观 0–5；“—” 表示该项不适用或无公开数据。',
+      en: 'Ratings are a personal 0–5 take; “—” means not applicable or no public figure.',
+      ja: '評価は個人の主観 0–5。「—」は該当なし／公開値なし。',
+    }} /></p>
+  </section>
+</section>

@@ -3,10 +3,49 @@ import L from '../L.astro';
 import ProductCard from '../ProductCard.astro';
 import { ui } from '../../data/ui';
 import { categories } from '../../data/categories';
-import { products } from '../../data/products';
+import { products, LAST_UPDATED } from '../../data/products';
 
 const featured = products.filter((p) => p.featured);
 const countByCat = (id: string) => products.filter((p) => p.category === id).length;
+
+// ---- "by the numbers" stats ----
+const total = products.length;
+const lic = (k: string) => products.filter((p) => p.license === k).length;
+const stats = [
+  { n: total, label: { zh: '收录产品', en: 'products', ja: '製品' } },
+  { n: categories.length, label: { zh: '类别', en: 'categories', ja: 'カテゴリ' } },
+  { n: lic('open'), label: { zh: '开源', en: 'open source', ja: 'OSS' } },
+  { n: lic('open') + lic('partial'), label: { zh: '开源 / 部分开源', en: 'open / source-available', ja: 'OSS／一部公開' } },
+  { n: products.filter((p) => p.mine).length, label: { zh: '自研项目', en: 'self-built', ja: '自作' } },
+];
+
+// ---- category distribution chart ----
+const catCounts = categories.map((c) => ({ c, n: countByCat(c.id) }));
+const catMax = Math.max(...catCounts.map((x) => x.n), 1);
+
+// ---- layered stack diagram (surfaces -> frameworks -> infra -> models) ----
+const layers = [
+  {
+    icon: '⌨️', tone: 'a',
+    name: { zh: '使用面：CLI · IDE · 应用生成器', en: 'Surfaces: CLI · IDE · App builders', ja: '利用面：CLI · IDE · アプリビルダー' },
+    eg: ['Claude Code', 'Codex', 'Cursor', 'v0'],
+  },
+  {
+    icon: '🏗️', tone: 'b',
+    name: { zh: '框架 / Harness：自己造 agent', en: 'Frameworks / Harness: build your own', ja: 'フレームワーク／Harness：自作' },
+    eg: ['LangGraph', 'Pi', 'CrewAI', 'Mastra'],
+  },
+  {
+    icon: '🛠️', tone: 'c',
+    name: { zh: '基础设施：网关 · 路由 · 观测', en: 'Infrastructure: gateway · routing · observability', ja: '基盤：ゲートウェイ · ルーティング · 観測' },
+    eg: ['LiteLLM', 'OpenRouter', 'OpenClaw', 'Helicone'],
+  },
+  {
+    icon: '🧠', tone: 'd',
+    name: { zh: '基础模型：底层大脑', en: 'Foundation models: the brain underneath', ja: '基盤モデル：土台の脳' },
+    eg: ['Claude Fable 5', 'Opus 4.8', 'GPT-5.5', 'Gemini 3.1'],
+  },
+];
 ---
 <section class="view" data-view="home">
   <div class="hero">
@@ -15,7 +54,20 @@ const countByCat = (id: string) => products.filter((p) => p.category === id).len
     <p class="lead"><L t={ui.hero.sub} /></p>
     <div class="cta">
       <a class="btn primary" href="#catalog" data-go="catalog"><L t={ui.hero.ctaCatalog} /></a>
+      <a class="btn" href="#compare" data-go="compare"><L t={{ zh: '对比一览', en: 'Compare', ja: '比較' }} /></a>
       <a class="btn" href="#concepts" data-go="concepts"><L t={ui.hero.ctaConcepts} /></a>
+    </div>
+    <div class="statbar">
+      {stats.map((s) => (
+        <div class="stat">
+          <span class="num">{s.n}</span>
+          <span class="lab"><L t={s.label} /></span>
+        </div>
+      ))}
+      <div class="stat">
+        <span class="num upd">{LAST_UPDATED}</span>
+        <span class="lab"><L t={ui.labels.lastUpdated} /></span>
+      </div>
     </div>
   </div>
 
@@ -53,12 +105,37 @@ const countByCat = (id: string) => products.filter((p) => p.category === id).len
       en: 'E.g. Claude Code and Codex are products with a specific harness; LangGraph and Pi let you write your own harness; LiteLLM and OpenClaw are infrastructure / gateways.',
       ja: '例：Claude Code・Codex は「特定 harness を備えた製品」、LangGraph・Pi は「自分で harness を書く」、LiteLLM・OpenClaw は「基盤／ゲートウェイ」。',
     }} block /></p>
+
+    <p class="kicker" style="margin-top:1.8rem;"><L t={{ zh: '分层视角', en: 'The stack, layer by layer', ja: 'レイヤー別の俯瞰' }} /></p>
+    <div class="layers" role="list">
+      {layers.map((ly) => (
+        <div class={`layer tone-${ly.tone}`} role="listitem">
+          <span class="ly-ico">{ly.icon}</span>
+          <span class="ly-name"><L t={ly.name} /></span>
+          <span class="ly-eg">{ly.eg.map((e) => <code>{e}</code>)}</span>
+        </div>
+      ))}
+      <p class="ly-cap"><L t={{
+        zh: '从上到下：你直接用的工具 → 你用来造 agent 的框架 → 让它跑起来的基础设施 → 最底层的模型。',
+        en: 'Top to bottom: the tools you use → the frameworks you build agents with → the infra that runs them → the models underneath.',
+        ja: '上から下へ：直接使うツール → agent を作る枠組み → 動かす基盤 → 最下層のモデル。',
+      }} /></p>
+    </div>
   </section>
 
   <section class="block">
     <div class="section-head">
       <p class="kicker"><L t={{ zh: '六大类', en: 'Six categories', ja: '6 カテゴリ' }} /></p>
       <h2><L t={{ zh: '按类别浏览', en: 'Browse by category', ja: 'カテゴリで見る' }} /></h2>
+    </div>
+    <div class="card catbars">
+      {catCounts.map(({ c, n }) => (
+        <a class="catbar" href="#catalog" data-go="catalog" data-cat={c.id}>
+          <span class="cb-name">{c.icon} <L t={c.short} /></span>
+          <span class="cb-track"><span class="cb-fill" style={`width:${Math.max(4, Math.round((n / catMax) * 100))}%`}></span></span>
+          <span class="cb-num">{n}</span>
+        </a>
+      ))}
     </div>
     <div class="grid cols-cat">
       {categories.map((c) => {
