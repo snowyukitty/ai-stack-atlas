@@ -9,6 +9,7 @@
     "build": "astro build",
     "check": "astro check",
     "validate:data": "node scripts/validate-data.mjs",
+    "smoke": "node pw/smoke.mjs",
     "verify": "npm run validate:data && npm run check && npm run build",
     "open": "astro build && start \"\" \"dist/index.html\"",
     "preview": "astro preview",
@@ -22,6 +23,7 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.9",
+    "playwright": "^1.61.0",
     "typescript": "^5.9.3"
   }
 }

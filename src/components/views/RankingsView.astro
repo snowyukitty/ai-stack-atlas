@@ -7,6 +7,7 @@ import { productMap } from '../../data/products';
 const personal = rankings.filter((r) => r.kind === 'personal');
 const benches = rankings.filter((r) => r.kind === 'benchmark');
 const hasCard = (id?: string) => !!(id && productMap[id]);
+const pct = (score: number, max = 100) => Math.max(2, Math.min(100, Math.round((score / max) * 100)));
 ---
 <section class="view" data-view="rankings" hidden>
   <section class="block">
@@ -50,12 +51,15 @@ const hasCard = (id?: string) => !!(id && productMap[id]);
       <div class="card ranklist">
         <h3><L t={r.title} /></h3>
         <p style="color:var(--text-soft); font-size:.9rem; margin:.3rem 0 .8rem;"><L t={r.intro} /></p>
-        <table class="rank">
+        <table class="rank bench">
           <thead>
             <tr>
               <th>#</th>
               <th><L t={{ zh: '产品 / 模型', en: 'Product / model', ja: '製品／モデル' }} /></th>
-              <th><L t={{ zh: '成绩', en: 'Score', ja: 'スコア' }} /></th>
+              <th class="bar-col">
+                <L t={{ zh: '成绩', en: 'Score', ja: 'スコア' }} />
+                {r.scoreMax && <span class="axis-hint">0–{r.scoreMax}{r.unit ?? ''}</span>}
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -67,7 +71,18 @@ const hasCard = (id?: string) => !!(id && productMap[id]);
                     ? <a href={'#catalog/p-' + row.productId} data-go="catalog" data-target={'p-' + row.productId}>{row.name}</a>
                     : <span>{row.name}</span>}
                 </td>
-                <td><L t={row.note} /></td>
+                <td class="bar-col">
+                  {typeof row.score === 'number' ? (
+                    <div class="barwrap">
+                      <div class="bar" aria-hidden="true">
+                        <span class="bar-fill" style={`width:${pct(row.score, r.scoreMax)}%`}></span>
+                      </div>
+                      <span class="bar-label"><L t={row.note} /></span>
+                    </div>
+                  ) : (
+                    <L t={row.note} />
+                  )}
+                </td>
               </tr>
             ))}
           </tbody>
