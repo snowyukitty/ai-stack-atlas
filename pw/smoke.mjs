@@ -250,6 +250,38 @@ async function dupIds(page) {
   await ctx.close();
 }
 
+// ---------- Traditional Chinese (4th language) ----------
+{
+  const ctx = await browser.newContext({ viewport: { width: 1366, height: 900 } });
+  const page = await ctx.newPage();
+  await page.goto(FILE, { waitUntil: 'networkidle' });
+  const hasBtn = await page.$('#langseg button[data-lang="hant"]');
+  check('lang: 繁 (Traditional) button exists', !!hasBtn);
+  if (hasBtn) {
+    await page.click('#langseg button[data-lang="hant"]');
+    await page.waitForTimeout(80);
+    const st = await page.evaluate(() => {
+      const root = document.documentElement;
+      const wrap = document.querySelector('.hero .lead');
+      const zh = wrap.querySelector('[lang="zh"]');
+      const hant = wrap.querySelector('[lang="hant"]');
+      const vis = (el) => !!el && el.offsetParent !== null;
+      return {
+        dataLang: root.getAttribute('data-lang'),
+        htmlLang: root.getAttribute('lang'),
+        hantVisible: vis(hant), zhVisible: vis(zh),
+        differs: !!zh && !!hant && zh.textContent !== hant.textContent,
+        hantText: hant ? hant.textContent.slice(0, 30) : '',
+      };
+    });
+    check('lang: clicking 繁 sets data-lang=hant', st.dataLang === 'hant', JSON.stringify(st));
+    check('lang: html lang becomes zh-Hant', st.htmlLang === 'zh-Hant', `lang=${st.htmlLang}`);
+    check('lang: only the Traditional span shows', st.hantVisible && !st.zhVisible, JSON.stringify(st));
+    check('lang: Traditional text differs from Simplified', st.differs, `hant="${st.hantText}"`);
+  }
+  await ctx.close();
+}
+
 // ---------- Social / SEO meta (share card) ----------
 {
   const ctx = await browser.newContext({ viewport: { width: 1366, height: 900 } });

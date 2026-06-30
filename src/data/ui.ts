@@ -73,9 +73,9 @@ export const ui = {
   },
   footer: {
     built: {
-      zh: '一个会持续更新的 AI Stack 知识库 · 数据驱动 · 三语',
-      en: 'A continuously updated AI-stack knowledge base · data-driven · trilingual',
-      ja: '継続更新する AI スタック知識ベース · データ駆動 · 三言語',
+      zh: '一个会持续更新的 AI Stack 知识库 · 数据驱动 · 四语（简 / 繁 / EN / 日）',
+      en: 'A continuously updated AI-stack knowledge base · data-driven · 4 languages (简 / 繁 / EN / 日)',
+      ja: '継続更新する AI スタック知識ベース · データ駆動 · 4 言語（简 / 繁 / EN / 日）',
     },
     disclaimer: {
       zh: '评分与定位为个人观点，benchmark 数据引自公开来源，会随版本变化。',

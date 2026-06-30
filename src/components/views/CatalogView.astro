@@ -4,6 +4,7 @@ import ProductCard from '../ProductCard.astro';
 import { ui } from '../../data/ui';
 import { categories } from '../../data/categories';
 import { products } from '../../data/products';
+import { toHant } from '../../lib/hant';
 
 const grouped = categories.map((c) => ({
   cat: c,
@@ -56,10 +57,10 @@ const total = products.length;
   <script
     is:inline
     define:vars={{
-      placeholders: { zh: ui.labels.search.zh, en: ui.labels.search.en, ja: ui.labels.search.ja },
-      showingL: { zh: ui.labels.showing.zh, en: ui.labels.showing.en, ja: ui.labels.showing.ja },
-      resultsL: { zh: ui.labels.results.zh, en: ui.labels.results.en, ja: ui.labels.results.ja },
-      resultOneL: { zh: ui.labels.result.zh, en: ui.labels.result.en, ja: ui.labels.result.ja },
+      placeholders: { zh: ui.labels.search.zh, hant: toHant(ui.labels.search.zh), en: ui.labels.search.en, ja: ui.labels.search.ja },
+      showingL: { zh: ui.labels.showing.zh, hant: toHant(ui.labels.showing.zh), en: ui.labels.showing.en, ja: ui.labels.showing.ja },
+      resultsL: { zh: ui.labels.results.zh, hant: toHant(ui.labels.results.zh), en: ui.labels.results.en, ja: ui.labels.results.ja },
+      resultOneL: { zh: ui.labels.result.zh, hant: toHant(ui.labels.result.zh), en: ui.labels.result.en, ja: ui.labels.result.ja },
     }}
   >
     // @ts-nocheck

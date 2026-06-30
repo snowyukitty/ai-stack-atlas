@@ -12,7 +12,7 @@ const { title, description } = Astro.props;
 const fullTitle = title ? `${title} · AI Stack Atlas` : 'AI Stack Atlas';
 const desc =
   description ??
-  'A trilingual (中/EN/日) field guide to the modern AI stack: coding agents, CLIs, agent harnesses and infrastructure.';
+  'A four-language (简/繁/EN/日) field guide to the modern AI stack: coding agents, CLIs, agent harnesses and infrastructure.';
 
 // Canonical URL for the deployed (GitHub Pages) site. Harmless for the offline
 // file:// artifact, where these tags are simply ignored. Undefined if no `site`.
@@ -52,7 +52,7 @@ const favicon =
     {ogImage && <meta property="og:image" content={ogImage} />}
     {ogImage && <meta property="og:image:width" content="1200" />}
     {ogImage && <meta property="og:image:height" content="630" />}
-    {ogImage && <meta property="og:image:alt" content="AI Stack Atlas — a trilingual field guide to the modern AI stack" />}
+    {ogImage && <meta property="og:image:alt" content="AI Stack Atlas — a four-language field guide to the modern AI stack" />}
     <meta name="twitter:card" content={ogImage ? 'summary_large_image' : 'summary'} />
     <meta name="twitter:title" content={fullTitle} />
     <meta name="twitter:description" content={desc} />
@@ -70,13 +70,17 @@ const favicon =
     <script is:inline>
       (function () {
         try {
+          var htmlLang = function (l) { return l === 'zh' ? 'zh-Hans' : l === 'hant' ? 'zh-Hant' : l; };
           var L = localStorage.getItem('aistack-lang');
           if (!L) {
             var n = (navigator.language || 'zh').toLowerCase();
-            L = n.startsWith('ja') ? 'ja' : n.startsWith('en') ? 'en' : 'zh';
+            L = n.indexOf('ja') === 0 ? 'ja'
+              : n.indexOf('en') === 0 ? 'en'
+              : n.indexOf('zh') === 0 ? (/hant|tw|hk|mo/.test(n) ? 'hant' : 'zh')
+              : 'zh';
           }
           document.documentElement.setAttribute('data-lang', L);
-          document.documentElement.setAttribute('lang', L === 'zh' ? 'zh-Hans' : L);
+          document.documentElement.setAttribute('lang', htmlLang(L));
           var T = localStorage.getItem('aistack-theme');
           if (!T) {
             T = (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) ? 'light' : 'dark';
@@ -108,7 +112,7 @@ const favicon =
           b.addEventListener('click', function () {
             var l = b.getAttribute('data-lang');
             root.setAttribute('data-lang', l);
-            root.setAttribute('lang', l === 'zh' ? 'zh-Hans' : l);
+            root.setAttribute('lang', l === 'zh' ? 'zh-Hans' : l === 'hant' ? 'zh-Hant' : l);
             try { localStorage.setItem('aistack-lang', l); } catch (e) {}
             syncLang();
           });

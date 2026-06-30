@@ -87,7 +87,14 @@ const pct = (score: number, max = 100) => Math.max(2, Math.min(100, Math.round((
             ))}
           </tbody>
         </table>
-        {r.source && <p class="src"><L t={r.source} /></p>}
+        {(r.source || r.sourceLinks) && (
+          <p class="src">
+            {r.source && <L t={r.source} />}
+            {r.sourceLinks && r.sourceLinks.map((l) => (
+              <a class="srclink" href={l.url} target="_blank" rel="noopener">{l.label} ↗</a>
+            ))}
+          </p>
+        )}
       </div>
     ))}
   </section>
