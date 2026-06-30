@@ -110,11 +110,13 @@ code, kbd {
    ============================================================ */
 .i18n > [lang] { display: none; }
 html[data-lang="zh"] .i18n > [lang="zh"] { display: revert; }
+html[data-lang="hant"] .i18n > [lang="hant"] { display: revert; }
 html[data-lang="en"] .i18n > [lang="en"] { display: revert; }
 html[data-lang="ja"] .i18n > [lang="ja"] { display: revert; }
 /* block-level variant */
 .i18n-block > [lang] { display: none; }
 html[data-lang="zh"] .i18n-block > [lang="zh"] { display: block; }
+html[data-lang="hant"] .i18n-block > [lang="hant"] { display: block; }
 html[data-lang="en"] .i18n-block > [lang="en"] { display: block; }
 html[data-lang="ja"] .i18n-block > [lang="ja"] { display: block; }
 
@@ -401,6 +403,7 @@ details.pc[open] summary::before { content: "▾ "; }
    ============================================================ */
 .ranklist { margin-bottom: 1.6rem; }
 .ranklist .src { font-size: 0.78rem; color: var(--text-dim); margin-top: 0.5rem; }
+.ranklist .src .srclink { font-weight: 700; margin-left: 0.7rem; white-space: nowrap; }
 table.rank { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
 table.rank th, table.rank td { text-align: left; padding: 0.55rem 0.7rem; border-bottom: 1px solid var(--border-soft); vertical-align: top; }
 table.rank th { color: var(--text-dim); font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.06em; }

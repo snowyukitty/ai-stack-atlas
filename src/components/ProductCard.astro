@@ -1,6 +1,7 @@
 ---
 import type { Product } from '../lib/types';
 import { ui } from '../data/ui';
+import { toHant } from '../lib/hant';
 import L from './L.astro';
 
 interface Props {
@@ -15,10 +16,11 @@ const licenseBadge = {
   closed: { cls: '', t: ui.labels.closed },
 }[p.license];
 
-// Search haystack for client-side filtering.
+// Search haystack for client-side filtering (incl. Traditional, derived from zh).
 const haystack = [
   p.name, p.vendor, p.command ?? '', ...p.tags,
   p.subtype.en, p.tagline.en, p.subtype.zh, p.subtype.ja,
+  toHant(p.subtype.zh), toHant(p.tagline.zh),
 ].join(' ').toLowerCase();
 
 const rating = p.rating ?? 0;

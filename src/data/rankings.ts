@@ -1,4 +1,4 @@
-import type { Loc } from '../lib/types';
+import type { Loc, LinkRef } from '../lib/types';
 
 export interface RankRow {
   rank: number;
@@ -21,6 +21,8 @@ export interface RankList {
   unit?: string;
   /** Source note for benchmark lists. */
   source?: Loc;
+  /** Authoritative leaderboard / source links (benchmark lists). */
+  sourceLinks?: LinkRef[];
 }
 
 export const rankings: RankList[] = [
@@ -74,6 +76,7 @@ export const rankings: RankList[] = [
       { rank: 4, productId: 'gemini-cli', name: 'Gemini / Antigravity (Gemini 3.1 Pro)', score: 70.7, note: { zh: '70.7%', en: '70.7%', ja: '70.7%' } },
     ],
     source: { zh: '来源：公开 Terminal-Bench 2.1 榜单（2026）。', en: 'Source: public Terminal-Bench 2.1 leaderboard (2026).', ja: '出典：公開 Terminal-Bench 2.1 リーダーボード（2026）。' },
+    sourceLinks: [{ label: 'Terminal-Bench leaderboard', url: 'https://www.tbench.ai/leaderboard/terminal-bench/2.1' }],
   },
   {
     id: 'swe-bench-pro',
@@ -92,6 +95,10 @@ export const rankings: RankList[] = [
       { rank: 3, productId: 'gpt-55', name: 'GPT-5.5', score: 58.6, note: { zh: '58.6%', en: '58.6%', ja: '58.6%' } },
     ],
     source: { zh: '来源：SWE-bench Pro 公开数据（2026）。', en: 'Source: SWE-bench Pro public data (2026).', ja: '出典：SWE-bench Pro 公開データ（2026）。' },
+    sourceLinks: [
+      { label: 'Scale leaderboard', url: 'https://scale.com/leaderboard/swe_bench_pro_public' },
+      { label: 'SWE-bench', url: 'https://www.swebench.com/' },
+    ],
   },
   {
     id: 'aa-index',
@@ -111,5 +118,9 @@ export const rankings: RankList[] = [
       { rank: 5, productId: 'grok-43', name: 'Grok 4.3', score: 53, note: { zh: '~53', en: '~53', ja: '~53' } },
     ],
     source: { zh: '来源：Artificial Analysis（2026 年 6 月）。', en: 'Source: Artificial Analysis (June 2026).', ja: '出典：Artificial Analysis（2026 年 6 月）。' },
+    sourceLinks: [
+      { label: 'Artificial Analysis', url: 'https://artificialanalysis.ai/' },
+      { label: 'Arena (LMArena) Elo', url: 'https://arena.ai/leaderboard/' },
+    ],
   },
 ];

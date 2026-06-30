@@ -1,9 +1,11 @@
 ---
 /**
- * Renders all three languages; CSS (via html[data-lang]) shows the active one.
+ * Renders all four languages; CSS (via html[data-lang]) shows the active one.
+ * Traditional Chinese ("hant") is derived from `zh` at build time (OpenCC).
  * Use `block` for paragraph-level content.
  */
 import type { Loc } from '../lib/types';
+import { toHant } from '../lib/hant';
 interface Props {
   t: Loc;
   as?: keyof HTMLElementTagNameMap;
@@ -16,6 +18,7 @@ const wrapClass = (block ? 'i18n-block' : 'i18n') + (cls ? ' ' + cls : '');
 ---
 <Tag class={wrapClass}>
   <span lang="zh" set:html={t.zh}></span>
+  <span lang="hant" set:html={toHant(t.zh)}></span>
   <span lang="en" set:html={t.en}></span>
   <span lang="ja" set:html={t.ja}></span>
 </Tag>

@@ -1,15 +1,15 @@
 <div align="center">
 
-<img src="public/og.png" alt="AI Stack Atlas — a trilingual field guide to the modern AI stack" width="820">
+<img src="public/og.png" alt="AI Stack Atlas — a four-language field guide to the modern AI stack" width="820">
 
 # AI Stack Atlas · AI Stack 图鉴
 
 ### **[🔗 Live site → snowyukitty.github.io/ai-stack-atlas](https://snowyukitty.github.io/ai-stack-atlas/)**
 
-A **trilingual (中文 · English · 日本語)**, data-driven field guide & comparison hub for the
-modern AI stack — **coding agents · CLIs · agent harnesses · infrastructure**.
+A **four-language (简体 · 繁體 · English · 日本語)**, data-driven field guide & comparison hub
+for the modern AI stack — **coding agents · CLIs · agent harnesses · infrastructure**.
 
-`53 products` · `6 categories` · `side-by-side compare` · `benchmarks & charts` · `one self-contained file`
+`53 products` · `6 categories` · `4 languages` · `side-by-side compare` · `benchmarks & charts` · `one self-contained file`
 
 </div>
 
@@ -63,9 +63,13 @@ Requires Node 22.12+ (Astro 7's minimum; developed on Node 22). `npm install` is
 
 ## How it works
 
-The site renders **all three languages into the HTML**, and CSS shows only the active
+The site renders **all four languages into the HTML**, and CSS shows only the active
 one based on `<html data-lang="…">`. Switching language (or light/dark theme) is instant,
 client-side, and persisted to `localStorage` — no rebuild, no page reload.
+
+The data is authored in **three locales** (`zh` 简体 / `en` / `ja`); **Traditional Chinese
+(繁體) is derived from `zh` at build time** via OpenCC (`src/lib/hant.ts`, Taiwan `twp`
+preset), so the 4th language needs no duplicated strings.
 
 ```
 src/
@@ -77,7 +81,7 @@ src/
     ui.ts              · UI strings + LAST_UPDATED lives in products.ts
   lib/types.ts         · the data model (Product, Concept, …)
   components/
-    L.astro            · trilingual text helper ({zh,en,ja})
+    L.astro            · i18n text helper ({zh,en,ja}; 繁 derived from zh via lib/hant.ts)
     Header / Footer / ProductCard
     views/             · Home, Catalog, Compare (matrices), Concepts, Rankings (bar charts), Stack
   layouts/Base.astro   · <head>, inlined favicon, lang/theme + single-page router scripts

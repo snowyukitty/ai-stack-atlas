@@ -1612,7 +1612,7 @@ export const products: Product[] = [
     pricing: { zh: '$10 / $50 每百万 token', en: '$10 / $50 per 1M tokens', ja: '$10 / $50 / 百万トークン' },
     license: 'closed',
     status: 'active',
-    // TODO(owner): set a personal rating (0–5) — left unset pending your call.
+    rating: 5,
     benchmarks: [
       { label: 'Terminal-Bench 2.1', value: '88.0% · #1' },
       { label: 'SWE-bench Pro', value: '80.3% · #1' },
@@ -1628,7 +1628,10 @@ export const products: Product[] = [
       { zh: '安全回退会把部分查询转回 Opus 4.8；综合 AA 指数略低于 Opus', en: 'Safety fallback reroutes some queries to Opus 4.8; composite AA Index just below Opus', ja: '安全回退で一部照会が Opus 4.8 へ；総合 AA 指数は Opus をやや下回る' },
     ],
     bestFor: { zh: '最硬的编程 / agent 任务、可接受溢价', en: 'The hardest coding/agentic jobs, premium acceptable', ja: '最難のコーディング／agent 業務・割増許容' },
-    links: [{ label: 'Anthropic', url: 'https://www.anthropic.com/claude' }],
+    links: [
+      { label: 'Anthropic', url: 'https://www.anthropic.com/claude' },
+      { label: 'Artificial Analysis', url: 'https://artificialanalysis.ai/models/claude-fable-5' },
+    ],
     tags: ['model', 'anthropic', 'frontier', 'coding'],
     featured: true,
   },
@@ -1666,7 +1669,11 @@ export const products: Product[] = [
       { zh: '上下文 1M，略小于 GPT-5.5 / Grok', en: '1M context, smaller than GPT-5.5 / Grok', ja: '文脈 1M で GPT-5.5 / Grok より小さい' },
     ],
     bestFor: { zh: '编程、agent、要可靠推理的一切', en: 'Coding, agents, anything needing reliable reasoning', ja: 'コーディング・agent・信頼推論が要る全て' },
-    links: [{ label: 'Anthropic', url: 'https://www.anthropic.com/claude' }],
+    links: [
+      { label: 'Anthropic', url: 'https://www.anthropic.com/claude' },
+      { label: 'Artificial Analysis', url: 'https://artificialanalysis.ai/models' },
+      { label: 'Arena (Elo)', url: 'https://arena.ai/leaderboard/' },
+    ],
     tags: ['model', 'anthropic', 'frontier', 'coding'],
     featured: true,
   },
@@ -1705,7 +1712,10 @@ export const products: Product[] = [
       { zh: '价格高于 Opus 4.8', en: 'Pricier than Opus 4.8', ja: 'Opus 4.8 より高価' },
     ],
     bestFor: { zh: '工具密集型 agent、Codex 用户', en: 'Tool-heavy agents, Codex users', ja: 'ツール集約 agent・Codex ユーザー' },
-    links: [{ label: 'OpenAI', url: 'https://openai.com' }],
+    links: [
+      { label: 'OpenAI', url: 'https://openai.com' },
+      { label: 'Artificial Analysis', url: 'https://artificialanalysis.ai/models' },
+    ],
     tags: ['model', 'openai', 'frontier'],
   },
   {
@@ -1740,7 +1750,10 @@ export const products: Product[] = [
       { zh: '纯编程实测略逊第一梯队', en: 'Pure coding trails the top tier', ja: '純コーディングは第一線にやや劣る' },
     ],
     bestFor: { zh: '多模态、长上下文、Google 生态', en: 'Multimodal, long context, Google ecosystem', ja: '多モーダル・長文脈・Google 生態系' },
-    links: [{ label: 'Google DeepMind', url: 'https://deepmind.google/technologies/gemini/' }],
+    links: [
+      { label: 'Google DeepMind', url: 'https://deepmind.google/technologies/gemini/' },
+      { label: 'Artificial Analysis', url: 'https://artificialanalysis.ai/models' },
+    ],
     tags: ['model', 'google', 'multimodal', 'long-context'],
   },
   {
@@ -1776,7 +1789,10 @@ export const products: Product[] = [
       { zh: '综合智能略逊前三家', en: 'Overall intelligence below the top three', ja: '総合知能は上位 3 社に劣る' },
     ],
     bestFor: { zh: '超长上下文、速度 / 成本敏感', en: 'Ultra-long context, speed/cost sensitive', ja: '超長文脈・速度／コスト重視' },
-    links: [{ label: 'xAI', url: 'https://x.ai' }],
+    links: [
+      { label: 'xAI', url: 'https://x.ai' },
+      { label: 'Artificial Analysis', url: 'https://artificialanalysis.ai/models' },
+    ],
     tags: ['model', 'xai', 'long-context'],
   },
   {
@@ -1811,7 +1827,10 @@ export const products: Product[] = [
       { zh: '前沿能力略逊四大旗舰', en: 'Frontier ability below the big four', ja: '最前線能力は四大旗艦に劣る' },
     ],
     bestFor: { zh: '预算敏感、隐私 / 本地部署', en: 'Budget-sensitive, privacy / on-prem', ja: '予算重視・プライバシー／オンプレ' },
-    links: [{ label: 'Qwen', url: 'https://qwen.ai' }],
+    links: [
+      { label: 'Qwen', url: 'https://qwen.ai' },
+      { label: 'Artificial Analysis', url: 'https://artificialanalysis.ai/models' },
+    ],
     tags: ['model', 'qwen', 'budget', 'open-weights'],
   },
 ];
