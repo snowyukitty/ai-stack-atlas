@@ -465,6 +465,27 @@ table.matrix tr.is-sunset { opacity: 0.72; }
 .lic.partial { color: var(--warn); border-color: color-mix(in srgb, var(--warn) 40%, var(--border)); }
 
 /* ============================================================
+   Companies (deep-dive profiles)
+   ============================================================ */
+.company { display: flex; flex-direction: column; gap: 0.6rem; border-left: 4px solid var(--co-accent, var(--accent)); scroll-margin-top: var(--scroll-offset); }
+.co-head { display: flex; align-items: center; gap: 0.7rem; }
+.co-flag { font-size: 1.7rem; line-height: 1; }
+.co-id { display: flex; flex-direction: column; gap: 0.1rem; min-width: 0; }
+.co-id h3 { font-size: 1.12rem; }
+.co-meta { font-size: 0.78rem; color: var(--text-dim); }
+.co-head .lic { margin-left: auto; }
+.co-one { font-weight: 700; color: var(--co-accent, var(--accent)); font-size: 0.95rem; filter: saturate(1.1); }
+.co-facts { display: flex; flex-direction: column; gap: 0.2rem; font-size: 0.8rem; color: var(--text-soft); }
+.co-facts .co-fact b { color: var(--text-dim); font-weight: 700; margin-right: 0.35rem; }
+.co-analysis { font-size: 0.88rem; color: var(--text-soft); margin: 0.1rem 0; }
+.co-pos { font-size: 0.84rem; color: var(--text-soft); }
+.co-pos b { color: var(--text); }
+.co-prods { display: flex; flex-wrap: wrap; align-items: center; gap: 0.35rem; }
+.co-prods-k { font-size: 0.74rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-dim); margin-right: 0.2rem; }
+.co-chip { font-size: 0.74rem; font-weight: 700; background: var(--surface-2); border: 1px solid var(--border-soft); padding: 0.1rem 0.5rem; border-radius: 999px; }
+.co-chip:hover { text-decoration: none; border-color: color-mix(in srgb, var(--accent) 45%, var(--border)); }
+
+/* ============================================================
    Footer
    ============================================================ */
 .site-footer { border-top: 1px solid var(--border-soft); margin-top: 2.5rem; padding: 2rem 0; color: var(--text-dim); font-size: 0.85rem; }

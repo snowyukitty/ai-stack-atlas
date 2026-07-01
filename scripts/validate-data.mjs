@@ -7,6 +7,7 @@ const categories = read('src/data/categories.ts');
 const concepts = read('src/data/concepts.ts');
 const rankings = read('src/data/rankings.ts');
 const ui = read('src/data/ui.ts');
+const companies = read('src/data/companies.ts');
 
 const failures = [];
 
@@ -41,6 +42,9 @@ const conceptIds = values(concepts, /^\s+id:\s*'([^']+)'/gm);
 const conceptSeeRefs = values(concepts, /see:\s*\[([^\]]*)\]/g)
   .flatMap((list) => values(list, /'([^']+)'/g));
 const urls = values(products, /url:\s*'([^']+)'/g);
+const companyIds = values(companies, /^\s+id:\s*'([^']+)'/gm);
+const companyProductRefs = values(companies, /productIds:\s*\[([^\]]*)\]/g)
+  .flatMap((list) => values(list, /'([^']+)'/g));
 
 assert(productIds.length > 0, 'No products found.');
 assert(categoryIds.length > 0, 'No categories found.');
@@ -51,6 +55,9 @@ assert(missing(productCategories, categoryIds).length === 0, `Invalid product ca
 assert(missing(rankingProductRefs, productIds).length === 0, `Missing ranking product refs: ${missing(rankingProductRefs, productIds).join(', ')}`);
 assert(missing(conceptSeeRefs, conceptIds).length === 0, `Missing concept see refs: ${missing(conceptSeeRefs, conceptIds).join(', ')}`);
 assert(urls.every((url) => /^https?:\/\//.test(url)), `Non-http URLs: ${urls.filter((url) => !/^https?:\/\//.test(url)).join(', ')}`);
+assert(companyIds.length > 0, 'No companies found.');
+assert(duplicates(companyIds).length === 0, `Duplicate company ids: ${duplicates(companyIds).join(', ')}`);
+assert(missing(companyProductRefs, productIds).length === 0, `Company productIds not in catalog: ${missing(companyProductRefs, productIds).join(', ')}`);
 
 for (const [path, source] of [
   ['src/data/products.ts', products],
@@ -58,6 +65,7 @@ for (const [path, source] of [
   ['src/data/concepts.ts', concepts],
   ['src/data/rankings.ts', rankings],
   ['src/data/ui.ts', ui],
+  ['src/data/companies.ts', companies],
 ]) {
   const counts = {
     zh: values(source, /\bzh:/g).length,
@@ -86,4 +94,4 @@ if (failures.length > 0) {
   process.exit(1);
 }
 
-console.log(`Data validation passed: ${productIds.length} products, ${categoryIds.length} categories.`);
+console.log(`Data validation passed: ${productIds.length} products, ${categoryIds.length} categories, ${companyIds.length} companies.`);

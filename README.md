@@ -6,10 +6,10 @@
 
 ### **[🔗 Live site → snowyukitty.github.io/ai-stack-atlas](https://snowyukitty.github.io/ai-stack-atlas/)**
 
-A **four-language (简体 · 繁體 · English · 日本語)**, data-driven field guide & comparison hub
+A **four-language (English · 日本語 · 繁體 · 简体)**, data-driven field guide & comparison hub
 for the modern AI stack — **coding agents · CLIs · agent harnesses · infrastructure**.
 
-`53 products` · `6 categories` · `4 languages` · `side-by-side compare` · `benchmarks & charts` · `one self-contained file`
+`53 products` · `6 categories` · `8 AI companies` · `4 languages` · `side-by-side compare` · `benchmarks & charts` · `one self-contained file`
 
 </div>
 
@@ -17,7 +17,7 @@ for the modern AI stack — **coding agents · CLIs · agent harnesses · infras
 
 Built with [Astro](https://astro.build) and bundled into **one self-contained
 `dist/index.html`** — all CSS and JS inlined, the favicon embedded as a data URI,
-and the six "pages" turned into in-page views. **Double-click it and it just works**:
+and the seven "pages" turned into in-page views. **Double-click it and it just works**:
 no server, no Node, fully offline, copy it to a USB stick or send it to anyone.
 Astro is only the authoring/build tool — content stays **data-driven** so it's easy
 to **keep up to date**.
@@ -83,7 +83,8 @@ src/
   components/
     L.astro            · i18n text helper ({zh,en,ja}; 繁 derived from zh via lib/hant.ts)
     Header / Footer / ProductCard
-    views/             · Home, Catalog, Compare (matrices), Concepts, Rankings (bar charts), Stack
+    views/             · Home, Catalog, Compare, Companies (deep dives), Concepts, Rankings, Stack
+    companies.ts       · deep dives on the 8 labs behind the stack
   layouts/Base.astro   · <head>, inlined favicon, lang/theme + single-page router scripts
   pages/index.astro    · the ONLY page — composes all five views into one file
   styles/global.css    · theming (--vars), i18n toggle, all styling
@@ -96,7 +97,7 @@ pw/
   smoke.mjs            · browser smoke test of the built file (npm run smoke)
 ```
 
-All six views render into the one page; a tiny inline router (`Base.astro`) shows one
+All seven views render into the one page; a tiny inline router (`Base.astro`) shows one
 at a time via `#hash`, with working back/forward and deep links
 (`#catalog/cat=framework`, `#catalog/p-claude-code`, `#concepts/c-harness`, `#compare`).
 Charts (the benchmark bars in Rankings, the category-distribution and layered-stack

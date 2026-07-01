@@ -24,6 +24,7 @@ export const ui = {
     home: { zh: '首页', en: 'Home', ja: 'ホーム' },
     catalog: { zh: '产品图鉴', en: 'Catalog', ja: 'カタログ' },
     compare: { zh: '对比', en: 'Compare', ja: '比較' },
+    companies: { zh: '公司', en: 'Companies', ja: '企業' },
     concepts: { zh: '概念解析', en: 'Concepts', ja: '概念' },
     rankings: { zh: '排名 / 评测', en: 'Rankings', ja: 'ランキング' },
     stack: { zh: '我的 Stack', en: 'My Stack', ja: 'My Stack' },
@@ -73,9 +74,9 @@ export const ui = {
   },
   footer: {
     built: {
-      zh: '一个会持续更新的 AI Stack 知识库 · 数据驱动 · 四语（简 / 繁 / EN / 日）',
-      en: 'A continuously updated AI-stack knowledge base · data-driven · 4 languages (简 / 繁 / EN / 日)',
-      ja: '継続更新する AI スタック知識ベース · データ駆動 · 4 言語（简 / 繁 / EN / 日）',
+      zh: '一个会持续更新的 AI Stack 知识库 · 数据驱动 · 四语（EN / 日 / 繁 / 简）',
+      en: 'A continuously updated AI-stack knowledge base · data-driven · 4 languages (EN / 日 / 繁 / 简)',
+      ja: '継続更新する AI スタック知識ベース · データ駆動 · 4 言語（EN / 日 / 繁 / 简）',
     },
     disclaimer: {
       zh: '评分与定位为个人观点，benchmark 数据引自公开来源，会随版本变化。',
