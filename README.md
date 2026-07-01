@@ -9,7 +9,7 @@
 A **four-language (English · 日本語 · 繁體 · 简体)**, data-driven field guide & comparison hub
 for the modern AI stack — **coding agents · CLIs · agent harnesses · infrastructure**.
 
-`53 products` · `6 categories` · `8 AI companies` · `4 languages` · `side-by-side compare` · `benchmarks & charts` · `one self-contained file`
+`53 products` · `6 categories` · `11 AI companies` · `4 languages` · `side-by-side compare` · `benchmarks & charts` · `one self-contained file`
 
 </div>
 
@@ -84,7 +84,7 @@ src/
     L.astro            · i18n text helper ({zh,en,ja}; 繁 derived from zh via lib/hant.ts)
     Header / Footer / ProductCard
     views/             · Home, Catalog, Compare, Companies (deep dives), Concepts, Rankings, Stack
-    companies.ts       · deep dives on the 8 labs behind the stack
+    companies.ts       · deep dives on the 11 labs behind the stack (US · China · Europe)
   layouts/Base.astro   · <head>, inlined favicon, lang/theme + single-page router scripts
   pages/index.astro    · the ONLY page — composes all five views into one file
   styles/global.css    · theming (--vars), i18n toggle, all styling

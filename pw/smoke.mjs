@@ -265,8 +265,8 @@ async function dupIds(page) {
     };
   });
   check('companies: view shown via #companies', co.visible, JSON.stringify(co));
-  check('companies: comparison matrix has 8 rows', co.rows === 8, `rows=${co.rows}`);
-  check('companies: 8 deep-dive profile cards', co.cards === 8, `cards=${co.cards}`);
+  check('companies: comparison matrix has 11 rows', co.rows === 11, `rows=${co.rows}`);
+  check('companies: 11 deep-dive profile cards', co.cards === 11, `cards=${co.cards}`);
   check('companies: profile cards anchored (#co-…)', co.anchored);
   check('companies: no console/page errors', errors.length === 0, errors.join(' | '));
   await ctx.close();
