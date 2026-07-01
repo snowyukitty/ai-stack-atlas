@@ -96,7 +96,7 @@ src/
     views/             · Home, Catalog, Compare, Companies (deep dives), Concepts, Rankings, Stack
     companies.ts       · deep dives on the 11 labs behind the stack (US · China · Europe)
   layouts/Base.astro   · <head>, inlined favicon, lang/theme + single-page router scripts
-  pages/index.astro    · the ONLY page — composes all five views into one file
+  pages/index.astro    · the ONLY page — composes all seven views into one file
   styles/global.css    · theming (--vars), i18n toggle, all styling
 brand/
   icon.svg             · icon master (isometric stack of three diamond layers)
@@ -154,6 +154,7 @@ automatically from the data.
 - Concepts: append to `concepts` in `src/data/concepts.ts` (`see: [...]` cross-links).
 - Rankings: append to `rankings` in `src/data/rankings.ts` (`kind: 'personal' | 'benchmark'`;
   set `productId` to link a row back to its catalog card).
+- Compare matrices: edit the `compareRows` tables in `src/data/rankings.ts` (one per category lane).
 
 ---
 
@@ -162,7 +163,8 @@ automatically from the data.
 It's static — `dist/` works on any static host.
 
 - **GitHub Pages (project site):** set `site` and `base` in `astro.config.mjs`
-  (e.g. `base: '/agentic-ai-stack'`), then publish `dist/`.
+  (this repo: `site: 'https://snowyukitty.github.io'`, `base: '/ai-stack-atlas/'`).
+  Pushing to `main` triggers `.github/workflows/deploy.yml` — validate, build, smoke, deploy.
 - **Vercel / Netlify / Cloudflare Pages:** framework preset "Astro",
   build `npm run build`, output `dist`.
 - **Anywhere:** copy `dist/` to any web root.
