@@ -51,10 +51,10 @@ const html = `<!doctype html><html><head><meta charset="utf-8">
       <div>
         <div class="kicker">EN · 日 · 繁 · 简 — AI Stack Atlas</div>
         <div class="title">AI Stack<br>Atlas</div>
-        <div class="sub">看懂整个 AI Stack — <b>coding agents, CLIs, agent harnesses &amp; infrastructure</b>, mapped.</div>
+        <div class="sub">看懂整个 AI Stack — <b>agents, CLIs, harnesses, infra &amp; creative AI (image / video / 3D / avatars)</b>, mapped.</div>
         <div class="pills">
-          <span class="pill accent">53 products</span>
-          <span class="pill">6 categories</span>
+          <span class="pill accent">92 products</span>
+          <span class="pill">12 categories</span>
           <span class="pill">4 languages EN / 日 / 繁 / 简</span>
         </div>
       </div>

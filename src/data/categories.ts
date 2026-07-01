@@ -67,6 +67,72 @@ export const categories: Category[] = [
       ja: 'すべての土台となる「脳」。コーディング／エージェント用途に最も関連するフロンティアモデルのみ掲載。',
     },
   },
+  {
+    id: 'music-gen',
+    icon: '🎵',
+    name: { zh: 'AI 音乐生成', en: 'AI Music Generation', ja: 'AI 音楽生成' },
+    short: { zh: '音乐生成', en: 'Music gen', ja: '音楽生成' },
+    blurb: {
+      zh: '从文字提示生成完整歌曲、伴奏或配乐：人声演唱、编曲、分轨导出与商用授权各平台差异大。',
+      en: 'Turn text prompts into full songs, instrumentals or scores — vocals, arrangement, stem export and commercial rights vary widely by platform.',
+      ja: 'テキストからフルソング・インスト・スコアを生成。ボーカル、編曲、ステム書き出し、商用権はプラットフォームごとに大きく異なる。',
+    },
+  },
+  {
+    id: 'video-gen',
+    icon: '🎬',
+    name: { zh: 'AI 视频生成', en: 'AI Video Generation', ja: 'AI 動画生成' },
+    short: { zh: '视频生成', en: 'Video gen', ja: '動画生成' },
+    blurb: {
+      zh: '文生视频、图生视频与视频编辑：运动物理、时序一致性、音画同步是拉开差距的关键维度。',
+      en: 'Text-to-video, image-to-video and video editing — motion physics, temporal consistency and audio sync are where models separate.',
+      ja: 'テキスト→動画、画像→動画、動画編集。運動物理・時間的一貫性・音画同期が差を生む。',
+    },
+  },
+  {
+    id: 'image-gen',
+    icon: '🖼️',
+    name: { zh: 'AI 图像生成', en: 'AI Image Generation', ja: 'AI 画像生成' },
+    short: { zh: '图像生成', en: 'Image gen', ja: '画像生成' },
+    blurb: {
+      zh: '文生图、图生图与图像编辑：美学风格、文字渲染准确度、开源可自托管是主要分叉。',
+      en: 'Text-to-image, image-to-image and editing — aesthetic style, text rendering accuracy and open self-hosting are the main forks.',
+      ja: 'テキスト→画像、画像→画像、画像編集。美学、テキスト描画精度、オープン自己ホストが主な分岐。',
+    },
+  },
+  {
+    id: 'voice-clone',
+    icon: '🎙️',
+    name: { zh: '语音克隆 / TTS', en: 'Voice Cloning / TTS', ja: '音声クローン / TTS' },
+    short: { zh: '语音克隆', en: 'Voice clone', ja: '音声クローン' },
+    blurb: {
+      zh: '从短样本克隆人声并合成语音：保真度、流式延迟、同意验证与自托管选项差异巨大。',
+      en: 'Clone a voice from a short sample and synthesize speech — fidelity, streaming latency, consent checks and self-host options vary hugely.',
+      ja: '短いサンプルから声をクローンし音声合成。忠実度、ストリーミング遅延、同意検証、自己ホストの有無で大きく異なる。',
+    },
+  },
+  {
+    id: '3d-gen',
+    icon: '🧊',
+    name: { zh: 'AI 3D 生成', en: 'AI 3D Generation', ja: 'AI 3D 生成' },
+    short: { zh: '3D 生成', en: '3D gen', ja: '3D 生成' },
+    blurb: {
+      zh: '文生 3D、图生 3D 与纹理烘焙：速度、拓扑质量、PBR 材质、水密可打印性是核心分叉。',
+      en: 'Text-to-3D, image-to-3D and texture baking — speed, mesh topology, PBR materials and watertight printability are the main forks.',
+      ja: 'テキスト→3D、画像→3D、テクスチャベイク。速度、メッシュトポロジ、PBR 材質、水密印刷適性が主な分岐。',
+    },
+  },
+  {
+    id: 'avatar-gen',
+    icon: '👤',
+    name: { zh: '数字人 / AI Avatar', en: 'Digital Humans / AI Avatars', ja: 'デジタルヒューマン / AI Avatar' },
+    short: { zh: '数字人', en: 'Avatars', ja: 'デジタルヒューマン' },
+    blurb: {
+      zh: '脚本驱动的虚拟主播与讲解视频：口型同步、多语言翻译、自定义形象与企业合规是选型关键。',
+      en: 'Script-driven virtual presenters and explainer videos — lip-sync, multilingual translation, custom likeness and enterprise compliance matter most.',
+      ja: '脚本駆動のバーチャルプレゼンターと解説動画。リップシンク、多言語翻訳、カスタム外見、企業コンプライアンスが選定の要。',
+    },
+  },
 ];
 
 export const categoryMap = Object.fromEntries(categories.map((c) => [c.id, c]));

@@ -78,6 +78,72 @@ export const concepts: Concept[] = [
     },
     see: ['harness'],
   },
+  {
+    id: 'text-to-music',
+    term: { zh: '文生音乐 (Text-to-Music)', en: 'Text-to-Music', ja: 'テキスト→音楽' },
+    hook: { zh: '一句话变一首歌', en: 'A sentence becomes a song', ja: '一文が一曲になる' },
+    body: {
+      zh: 'AI 音乐生成把自然语言（或歌词、风格标签）映射为音频波形。2026 年的第一梯队（Suno v5、Udio）已能生成带人声演唱、编曲与混音的完整歌曲；第二梯队专注器乐配乐（ElevenLabs Music、Loudly）、古典作曲（AIVA）或实时流式 BGM（Mubert）。选型关键：要完整歌曲还是背景乐？要分轨进 DAW 还是一键出成品？商用权是否在订阅期内创作？版权方面，Suno / Udio 已与主流厂牌达成和解，条款仍在演进。',
+      en: 'AI music generation maps natural language (or lyrics and style tags) to audio waveforms. In 2026 the top tier (Suno v5, Udio) produces full songs with sung vocals, arrangement and mix; the second tier covers instrumental beds (ElevenLabs Music, Loudly), classical composition (AIVA) or real-time streaming BGM (Mubert). Pick by: full song vs bed? Stems for a DAW vs one-shot output? Commercial rights only while subscribed? Suno / Udio have major-label settlements but terms are still evolving.',
+      ja: 'AI 音楽生成は自然言語（または歌詞・スタイルタグ）を音波に写像する。2026 年の第一線（Suno v5、Udio）は歌唱・編曲・ミックス付きフルソングを生成。第二線はインスト BGM（ElevenLabs Music、Loudly）、クラシック作曲（AIVA）、リアルタイム BGM（Mubert）。選定軸：フルソングか BGM か？DAW 用ステムか一発完成か？商用権は購読中のみか？Suno／Udio は大手レーベルと和解済みだが条項は変動中。',
+    },
+    see: ['text-to-video'],
+  },
+  {
+    id: 'text-to-video',
+    term: { zh: '文生视频 (Text-to-Video)', en: 'Text-to-Video', ja: 'テキスト→動画' },
+    hook: { zh: '文字变镜头', en: 'Words become shots', ja: '言葉がショットになる' },
+    body: {
+      zh: '文生视频（T2V）与图生视频（I2V）是扩散 Transformer 的多帧扩展：从随机噪声同时精炼多帧，由文本编码器引导生成连贯短片。难的不是单帧画质，而是时序一致性——主体、光照、镜头运动在帧间不漂移。2026 年 Video Arena 盲测由 Kling v3 领跑，LTX-2 Fast 以极低秒价居次席。西方旗舰 Sora 2、Veo 3 强在物理模拟与原生音画同步；Runway Gen-4 强在专业镜头控制与后期编辑。实用工作流：用 LTX-2 / Seedance 大量筛概念，Kling / Sora 精修关键镜头，Runway 做后期。',
+      en: 'Text-to-video (T2V) and image-to-video (I2V) extend diffusion transformers across frames: refine many frames at once from noise, guided by a text encoder. The hard part is not a single frame\'s look but temporal consistency — subjects, lighting and camera motion that don\'t drift. In 2026 the Video Arena blind leaderboard is led by Kling v3, with LTX-2 Fast #2 on rock-bottom per-second cost. Western flagships Sora 2 and Veo 3 excel at physics and native A/V sync; Runway Gen-4 at pro camera control and post. Practical pipeline: LTX-2 / Seedance for volume, Kling / Sora for hero shots, Runway for post.',
+      ja: 'T2V／I2V は拡散 Transformer のマルチフレーム拡張。ノイズから複数フレームを同時精製し、テキストエンコーダが誘導。難所は単フレーム画質ではなく時間的一貫性。2026 年 Video Arena 盲測は Kling v3 が首位、LTX-2 Fast が秒単価最安で 2 位。西洋旗艦 Sora 2・Veo 3 は物理とネイティブ音画同期、Runway Gen-4 はプロカメラ制御と後工程。実務 WF：LTX-2／Seedance で量産、Kling／Sora で仕上げ、Runway でポスト。',
+    },
+    see: ['text-to-music', 'text-to-image', 'model'],
+  },
+  {
+    id: 'text-to-image',
+    term: { zh: '文生图 (Text-to-Image)', en: 'Text-to-Image', ja: 'テキスト→画像' },
+    hook: { zh: '文字变画面', en: 'Words become pictures', ja: '言葉が画面になる' },
+    body: {
+      zh: '文生图把自然语言映射为像素（或矢量）画面。2026 年 Image Arena 盲测由 GPT Image 2（Elo 1339）领跑；Midjourney 在主观美学上仍是许多创作者首选；Flux / SD 3.5 代表开源自托管路线（ComfyUI + LoRA + ControlNet）；Ideogram 专攻图内文字渲染；Recraft 专攻 SVG 矢量品牌设计。选型关键：要公榜质量、要「好看」、要可读文字、要自托管、还是要矢量可编辑？',
+      en: 'Text-to-image maps natural language to pixels (or vectors). In 2026 the Image Arena blind board is led by GPT Image 2 (Elo 1339); Midjourney remains many creators\' subjective aesthetic pick; Flux / SD 3.5 represent the open self-host path (ComfyUI + LoRA + ControlNet); Ideogram owns in-image text; Recraft owns editable SVG brand design. Pick by: public-board quality, pure aesthetics, readable type, self-hosting or editable vectors?',
+      ja: 'テキスト→画像は自然言語をピクセル（またはベクター）に写像。2026 年 Image Arena は GPT Image 2（Elo 1339）が首位。Midjourney は主観的美学で定番。Flux／SD 3.5 はオープン自己ホスト（ComfyUI＋LoRA＋ControlNet）。Ideogram は画像内文字、Recraft は SVG ブランドデザイン。',
+    },
+    see: ['text-to-video', 'model'],
+  },
+  {
+    id: 'voice-clone',
+    term: { zh: '语音克隆 (Voice Cloning)', en: 'Voice Cloning', ja: '音声クローン' },
+    hook: { zh: '十秒样本，无限配音', en: 'Ten seconds of audio, endless dubbing', ja: '10 秒の音声で無限吹替' },
+    body: {
+      zh: '现代语音克隆不是微调整个模型，而是说话人编码器把参考音频压成固定长度嵌入，在推理时条件化声学模型。ElevenLabs Pro（30+ 分钟样本，9.5/10 保真）和 IVC（60 秒，8.5/10）是托管标杆；Cartesia 以 <100ms TTFB 称霸实时 Agent；F5-TTS（MIT）和 Fish Speech（CC-BY-NC）可自托管。生产必做：书面同意、审计日志、输出水印与「AI 生成语音」披露。未经同意克隆他人声音在多数法域违法。',
+      en: 'Modern voice cloning is not full-model fine-tuning: a speaker encoder compresses reference audio into a fixed embedding that conditions the acoustic model at inference. ElevenLabs Pro (30+ min, 9.5/10) and IVC (60s, 8.5/10) lead hosted; Cartesia owns real-time agents at <100ms TTFB; F5-TTS (MIT) and Fish Speech (CC-BY-NC) self-host. Production must-haves: written consent, audit logs, output watermarking and "AI-generated voice" disclosure. Cloning without consent is illegal in most jurisdictions.',
+      ja: '現代の音声クローンは全モデル微調整ではなく、話者エンコーダが参照音声を埋め込みに圧縮し推論時に条件付け。ElevenLabs Pro（30 分以上、9.5/10）と IVC（60 秒、8.5/10）がホスト型の基準。Cartesia は TTFB <100ms でリアルタイム agent。F5-TTS（MIT）と Fish Speech（CC-BY-NC）は自己ホスト可。本番必須：書面同意、監査ログ、透かし、「AI 生成音声」の開示。',
+    },
+    see: ['text-to-music', 'text-to-video', 'text-to-3d'],
+  },
+  {
+    id: 'text-to-3d',
+    term: { zh: '文生 3D (Text-to-3D)', en: 'Text-to-3D', ja: 'テキスト→3D' },
+    hook: { zh: '一句话变模型', en: 'A sentence becomes a mesh', ja: '一文がメッシュになる' },
+    body: {
+      zh: 'AI 3D 生成把文字或图片映射为带纹理的三维网格。2026 年赛道已分化为四条主线：Tripo3D 用 ~15 秒极速草稿做概念验证；Neural4D / Rodin 用体积推理或高精度重建产出水密网格 + 4K PBR 供游戏引擎与 3D 打印；Meshy 专攻风格化四边面游戏资产；Hunyuan3D / TRELLIS 2 代表可自托管的开源路线。选型关键：要速度还是要水密？要游戏风还是写实？要 SaaS 还是要本地 GPU？',
+      en: 'AI 3D generation maps text or images to textured 3D meshes. In 2026 the field splits into four lanes: Tripo3D for ~15s concept drafts; Neural4D / Rodin for watertight meshes + 4K PBR via volumetric or high-fidelity reconstruction; Meshy for stylized quad game assets; Hunyuan3D / TRELLIS 2 for self-hostable open routes. Pick by: speed or watertight? Stylized or photoreal? SaaS or local GPU?',
+      ja: 'AI 3D 生成はテキストや画像をテクスチャ付き 3D メッシュに写像。2026 年は 4 路線：Tripo3D は約 15 秒ドラフト、Neural4D／Rodin は水密＋4K PBR、Meshy はスタイル化クアド、Hunyuan3D／TRELLIS 2 は自己ホスト可能なオープン路線。',
+    },
+    see: ['text-to-image', 'text-to-video', 'digital-human'],
+  },
+  {
+    id: 'digital-human',
+    term: { zh: '数字人 (Digital Human)', en: 'Digital Human', ja: 'デジタルヒューマン' },
+    hook: { zh: '脚本驱动的虚拟主播', en: 'Script-driven virtual presenters', ja: '脚本駆動のバーチャルプレゼンター' },
+    body: {
+      zh: '数字人平台把脚本（或翻译后的脚本）驱动虚拟角色的口型、表情与（部分平台的）全身动作，输出讲解 / 培训 / 营销视频。HeyGen 在 175+ 语言口型同步与自拍 Instant Avatar 上综合领先；Synthesia 在企业模板、全身表演与合规文档上强项；D-ID 用轻量 API 把任意照片变成 Talking Head；Hedra 走表现力创意角色路线；Tavus 专攻销售外联的千人千面个性化。与「文生视频」（Sora / Kling）不同：数字人核心是「可控讲解」而非「自由镜头」。',
+      en: 'Digital-human platforms drive a virtual character\'s lip-sync, expression and (on some platforms) full-body motion from a script — or a translated script — to produce explainers, training and marketing video. HeyGen leads overall on 175+ lip-synced languages and selfie Instant Avatars; Synthesia on enterprise templates, full-body performance and compliance docs; D-ID via a lightweight API that turns any photo into a talking head; Hedra for expressive creative characters; Tavus for per-recipient sales personalization. Unlike text-to-video (Sora/Kling), the core here is controlled presentation, not free-form cinematography.',
+      ja: 'デジタルヒューマンは脚本（または翻訳脚本）でバーチャルキャラのリップシンク・表情・（一部は全身）を駆動し解説／研修／マーケ動画を出力。HeyGen は 175+ 言語と自撮り Instant Avatar で総合首位。Synthesia は企業テンプレと全身演技。D-ID は写真→Talking Head API。Hedra は表現力クリエイティブ。Tavus は営業の受信者別パーソナライズ。T2V（Sora／Kling）とは異なり「制御されたプレゼン」が核心。',
+    },
+    see: ['voice-clone', 'text-to-video', 'text-to-3d'],
+  },
 ];
 
 export const conceptMap = Object.fromEntries(concepts.map((c) => [c.id, c]));

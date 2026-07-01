@@ -16,9 +16,9 @@ export const ui = {
     ja: 'AI スタック図鑑',
   },
   siteTagline: {
-    zh: '编程智能体 · CLI · Agent Harness · 基础设施 全景导览',
-    en: 'A field guide to coding agents, CLIs, agent harnesses & infrastructure',
-    ja: 'コーディングエージェント・CLI・Agent Harness・基盤の全景ガイド',
+    zh: '编程智能体 · CLI · Harness · 基础设施 · 图像 / 视频 / 3D / 数字人 / 音乐 / 语音 全景导览',
+    en: 'A field guide to coding agents, CLIs, harnesses, infrastructure & creative AI (image / video / 3D / avatars / music / voice)',
+    ja: 'コーディングエージェント・CLI・Harness・基盤・画像／動画／3D／デジタルヒューマン／音楽／音声の全景ガイド',
   },
   nav: {
     home: { zh: '首页', en: 'Home', ja: 'ホーム' },
@@ -36,9 +36,9 @@ export const ui = {
       ja: 'AI スタックの全体像をつかむ',
     },
     sub: {
-      zh: '从「模型」到「harness」到「基础设施」——把编程智能体、CLI、Agent 框架与平台讲清楚，帮你入门、对比、深入。',
-      en: 'From models to harnesses to infrastructure — a clear, opinionated map of coding agents, CLIs, agent frameworks and platforms to help you start, compare and go deep.',
-      ja: 'モデルから harness、そして基盤まで — コーディングエージェント・CLI・Agent フレームワーク・プラットフォームを整理し、入門・比較・深掘りを支援します。',
+      zh: '从「模型」到「harness」到「基础设施」，再到图像 / 视频 / 3D / 数字人 / 音乐 / 语音——把编程智能体、CLI、Agent 框架与创意 AI 专有领域讲清楚，帮你入门、对比、深入。',
+      en: 'From models to harnesses to infrastructure — plus image, video, 3D, avatars, music and voice — a clear, opinionated map of coding agents, CLIs, agent frameworks and creative-AI domains to help you start, compare and go deep.',
+      ja: 'モデルから harness、基盤、そして画像／動画／3D／デジタルヒューマン／音楽／音声まで — コーディングエージェント・CLI・Agent フレームワークとクリエイティブ AI 領域を整理し、入門・比較・深掘りを支援します。',
     },
     ctaCatalog: { zh: '浏览产品图鉴', en: 'Browse the catalog', ja: 'カタログを見る' },
     ctaConcepts: { zh: '先搞懂概念', en: 'Learn the concepts', ja: '概念から学ぶ' },

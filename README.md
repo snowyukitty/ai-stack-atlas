@@ -7,9 +7,10 @@
 ### **[🔗 Live site → snowyukitty.github.io/ai-stack-atlas](https://snowyukitty.github.io/ai-stack-atlas/)**
 
 A **four-language (English · 日本語 · 繁體 · 简体)**, data-driven field guide & comparison hub
-for the modern AI stack — **coding agents · CLIs · agent harnesses · infrastructure**.
+for the modern AI stack — **coding agents · CLIs · harnesses · infrastructure · image / video / 3D / avatars / music / voice** —
+with ranked picks and side-by-side comparisons in each creative domain.
 
-`53 products` · `6 categories` · `11 AI companies` · `4 languages` · `side-by-side compare` · `benchmarks & charts` · `one self-contained file`
+`92 products` · `12 categories` · `11 AI companies` · `4 languages` · `side-by-side compare` · `benchmarks & charts` · `one self-contained file`
 
 </div>
 
@@ -22,8 +23,17 @@ no server, no Node, fully offline, copy it to a USB stick or send it to anyone.
 Astro is only the authoring/build tool — content stays **data-driven** so it's easy
 to **keep up to date**.
 
-> Data last reconciled against public sources: **2026-06-30**
-> (Terminal-Bench 2.1, SWE-bench Pro, Artificial Analysis Index, vendor announcements).
+> Data last reconciled against public sources: **2026-07-01**
+> (Terminal-Bench 2.1, SWE-bench Pro, AA Index, Image / Video Arena, 3D benchmarks, avatar reviews, Suno v5 / Udio, voice-clone benchmarks, vendor announcements).
+
+### Twelve categories at a glance
+
+| Lane | Categories | What you get |
+|------|------------|--------------|
+| **Agent stack** | CLI · IDE · App builders · Frameworks · Infra · Models | Coding agents, harnesses, gateways, frontier LLMs |
+| **Creative AI** | Image · Video · 3D · Avatars · Music · Voice | Ranked picks, benchmark bars, and side-by-side compare tables per domain |
+
+Each creative category ships **product cards** (pros/cons, pricing, links), **personal + public rankings**, and a **Compare** matrix row — all from the same data files.
 
 ---
 
@@ -75,7 +85,7 @@ preset), so the 4th language needs no duplicated strings.
 src/
   data/                ← EDIT THESE TO UPDATE CONTENT
     products.ts        · every product (the catalog)
-    categories.ts      · the six categories
+    categories.ts      · the twelve categories
     concepts.ts        · the concept / glossary explainers
     rankings.ts        · personal rankings + public benchmarks
     ui.ts              · UI strings + LAST_UPDATED lives in products.ts
@@ -114,7 +124,7 @@ human-readable field is a `Loc` (`{ zh, en, ja }`) so it stays trilingual:
   id: 'my-tool',
   name: 'My Tool',
   vendor: 'Acme',
-  category: 'coding-cli',           // coding-cli | coding-ide | app-builder | framework | infra | model
+  category: 'coding-cli',           // … | music-gen | video-gen | image-gen | voice-clone | 3d-gen | avatar-gen
   command: 'mytool',                // optional CLI command
   subtype: { zh: '…', en: '…', ja: '…' },
   tagline: { zh: '…', en: '…', ja: '…' },

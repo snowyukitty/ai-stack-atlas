@@ -11,7 +11,13 @@ export type CategoryId =
   | 'app-builder'
   | 'framework'
   | 'infra'
-  | 'model';
+  | 'model'
+  | 'music-gen'
+  | 'video-gen'
+  | 'image-gen'
+  | 'voice-clone'
+  | '3d-gen'
+  | 'avatar-gen';
 
 export type LicenseKind = 'open' | 'partial' | 'closed';
 export type Status = 'active' | 'beta' | 'sunset';

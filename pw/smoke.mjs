@@ -232,7 +232,7 @@ async function dupIds(page) {
     layers: document.querySelectorAll('.layers .layer').length,
   }));
   check('home: stat strip populated', home.stats >= 5, `stats=${home.stats}`);
-  check('home: category bar chart populated', home.catbars === 6, `catbars=${home.catbars}`);
+  check('home: category bar chart populated', home.catbars === 12, `catbars=${home.catbars}`);
   check('home: layered stack diagram present', home.layers === 4, `layers=${home.layers}`);
 
   check('compare/charts: no console/page errors', errors.length === 0, errors.join(' | '));
