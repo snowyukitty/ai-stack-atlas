@@ -34,7 +34,7 @@ const favicon =
   "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%201024%201024%22%3E%3Cdefs%3E%3CradialGradient%20id%3D%22bgGlow%22%20cx%3D%220.5%22%20cy%3D%220.3%22%20r%3D%220.8%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%231b2842%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%230b0e14%22%2F%3E%3C%2FradialGradient%3E%3CradialGradient%20id%3D%22stackGlow%22%20cx%3D%220.5%22%20cy%3D%220.5%22%20r%3D%220.5%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%235be3c9%22%20stop-opacity%3D%220.30%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%235be3c9%22%20stop-opacity%3D%220%22%2F%3E%3C%2FradialGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%221024%22%20height%3D%221024%22%20rx%3D%22220%22%20fill%3D%22url%28%23bgGlow%29%22%2F%3E%3Cellipse%20cx%3D%22512%22%20cy%3D%22504%22%20rx%3D%22300%22%20ry%3D%22280%22%20fill%3D%22url%28%23stackGlow%29%22%2F%3E%3Cg%20stroke%3D%22%230a1422%22%20stroke-width%3D%228%22%20stroke-linejoin%3D%22round%22%3E%3Cpolygon%20points%3D%22262%2C760%20512%2C660%20762%2C760%20512%2C860%22%20fill%3D%22%237c9cff%22%2F%3E%3Cpolygon%20points%3D%22262%2C760%20512%2C860%20512%2C908%20262%2C808%22%20fill%3D%22%235571d6%22%2F%3E%3Cpolygon%20points%3D%22512%2C860%20762%2C760%20762%2C808%20512%2C908%22%20fill%3D%22%233d50ab%22%2F%3E%3Cpolygon%20points%3D%22262%2C480%20512%2C380%20762%2C480%20512%2C580%22%20fill%3D%22%236ec1ec%22%2F%3E%3Cpolygon%20points%3D%22262%2C480%20512%2C580%20512%2C628%20262%2C528%22%20fill%3D%22%233e8fcf%22%2F%3E%3Cpolygon%20points%3D%22512%2C580%20762%2C480%20762%2C528%20512%2C628%22%20fill%3D%22%232a6ba6%22%2F%3E%3Cpolygon%20points%3D%22262%2C200%20512%2C100%20762%2C200%20512%2C300%22%20fill%3D%22%237becdb%22%2F%3E%3Cpolygon%20points%3D%22262%2C200%20512%2C300%20512%2C348%20262%2C248%22%20fill%3D%22%2334bda6%22%2F%3E%3Cpolygon%20points%3D%22512%2C300%20762%2C200%20762%2C248%20512%2C348%22%20fill%3D%22%231f9082%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E";
 ---
 <!doctype html>
-<html lang="en" data-theme="dark" data-lang="zh">
+<html lang="en" data-theme="dark" data-lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -71,14 +71,8 @@ const favicon =
       (function () {
         try {
           var htmlLang = function (l) { return l === 'zh' ? 'zh-Hans' : l === 'hant' ? 'zh-Hant' : l; };
-          var L = localStorage.getItem('aistack-lang');
-          if (!L) {
-            var n = (navigator.language || 'zh').toLowerCase();
-            L = n.indexOf('ja') === 0 ? 'ja'
-              : n.indexOf('en') === 0 ? 'en'
-              : n.indexOf('zh') === 0 ? (/hant|tw|hk|mo/.test(n) ? 'hant' : 'zh')
-              : 'zh';
-          }
+          // First-time visitors default to English; thereafter the saved choice wins.
+          var L = localStorage.getItem('aistack-lang') || 'en';
           document.documentElement.setAttribute('data-lang', L);
           document.documentElement.setAttribute('lang', htmlLang(L));
           var T = localStorage.getItem('aistack-theme');

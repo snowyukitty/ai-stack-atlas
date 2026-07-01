@@ -4,6 +4,7 @@ import ProductCard from '../ProductCard.astro';
 import { ui } from '../../data/ui';
 import { categories } from '../../data/categories';
 import { products, LAST_UPDATED } from '../../data/products';
+import { companies } from '../../data/companies';
 
 const featured = products.filter((p) => p.featured);
 const countByCat = (id: string) => products.filter((p) => p.category === id).length;
@@ -14,7 +15,7 @@ const lic = (k: string) => products.filter((p) => p.license === k).length;
 const stats = [
   { n: total, label: { zh: '收录产品', en: 'products', ja: '製品' } },
   { n: categories.length, label: { zh: '类别', en: 'categories', ja: 'カテゴリ' } },
-  { n: lic('open'), label: { zh: '开源', en: 'open source', ja: 'OSS' } },
+  { n: companies.length, label: { zh: 'AI 公司', en: 'AI companies', ja: 'AI 企業' } },
   { n: lic('open') + lic('partial'), label: { zh: '开源 / 部分开源', en: 'open / source-available', ja: 'OSS／一部公開' } },
   { n: products.filter((p) => p.mine).length, label: { zh: '自研项目', en: 'self-built', ja: '自作' } },
 ];
@@ -49,7 +50,7 @@ const layers = [
 ---
 <section class="view" data-view="home">
   <div class="hero">
-    <p class="kicker">简 · 繁 · EN · 日 — AI STACK ATLAS</p>
+    <p class="kicker">EN · 日 · 繁 · 简 — AI STACK ATLAS</p>
     <h1><L t={ui.hero.title} /></h1>
     <p class="lead"><L t={ui.hero.sub} /></p>
     <div class="cta">

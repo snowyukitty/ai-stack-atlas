@@ -17,8 +17,8 @@ const Tag = as as any;
 const wrapClass = (block ? 'i18n-block' : 'i18n') + (cls ? ' ' + cls : '');
 ---
 <Tag class={wrapClass}>
-  <span lang="zh" set:html={t.zh}></span>
-  <span lang="hant" set:html={toHant(t.zh)}></span>
   <span lang="en" set:html={t.en}></span>
   <span lang="ja" set:html={t.ja}></span>
+  <span lang="hant" set:html={toHant(t.zh)}></span>
+  <span lang="zh" set:html={t.zh}></span>
 </Tag>

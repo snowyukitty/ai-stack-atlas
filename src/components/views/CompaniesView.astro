@@ -1,0 +1,111 @@
+---
+import L from '../L.astro';
+import { ui } from '../../data/ui';
+import { companies } from '../../data/companies';
+import { productMap } from '../../data/products';
+
+const stanceLabel = {
+  closed: { cls: '', t: { zh: '闭源', en: 'Closed', ja: 'クローズド' } },
+  open: { cls: 'open', t: { zh: '开源权重', en: 'Open weights', ja: 'オープン' } },
+  hybrid: { cls: 'partial', t: { zh: '开 + 闭', en: 'Hybrid', ja: 'ハイブリッド' } },
+} as const;
+---
+<section class="view" data-view="companies" hidden>
+  <section class="block">
+    <div class="section-head">
+      <p class="kicker"><L t={ui.nav.companies} /></p>
+      <h2><L t={{ zh: '公司才是最根本的', en: 'The company is the most fundamental layer', ja: '最も根本は「企業」' }} /></h2>
+      <p><L t={{
+        zh: '模型会换代，公司的激励、治理、算力与商业模式才决定长期走向。下面是驱动整个栈的 8 家实验室的深度对比与分析。数字为 2026 年公开快照，变动很快。',
+        en: 'Models churn; a company\'s incentives, governance, compute and business model decide the long arc. Below: a deep comparison and analysis of the 8 labs that drive the whole stack. Figures are public 2026 snapshots and move fast.',
+        ja: 'モデルは世代交代する。企業のインセンティブ・統治・計算資源・ビジネスモデルこそが長期の方向を決める。以下はスタックを動かす 8 ラボの深掘り比較。数値は 2026 年の公開スナップショット。',
+      }} /></p>
+    </div>
+
+    {/* ---------- comparison matrix ---------- */}
+    <div class="matrix-scroll">
+      <table class="matrix">
+        <thead>
+          <tr>
+            <th><L t={{ zh: '公司', en: 'Company', ja: '企業' }} /></th>
+            <th><L t={{ zh: '国家 · 成立', en: 'Country · Founded', ja: '国 · 設立' }} /></th>
+            <th><L t={{ zh: '估值 / 状态', en: 'Valuation / status', ja: '評価/状態' }} /></th>
+            <th><L t={{ zh: '权重', en: 'Weights', ja: 'ウェイト' }} /></th>
+            <th><L t={{ zh: '旗舰模型', en: 'Flagship', ja: '旗艦' }} /></th>
+            <th><L t={{ zh: '侧重', en: 'Focus', ja: '重点' }} /></th>
+          </tr>
+        </thead>
+        <tbody>
+          {companies.map((c) => (
+            <tr>
+              <th scope="row">
+                <a href={'#companies/co-' + c.id} data-go="companies" data-target={'co-' + c.id}>{c.flag} {c.name}</a>
+              </th>
+              <td class="nowrap"><L t={c.country} /> · {c.founded}</td>
+              <td class="nowrap">{c.valuation}</td>
+              <td><span class={`lic ${stanceLabel[c.stance].cls}`}><L t={stanceLabel[c.stance].t} /></span></td>
+              <td>{c.flagship}</td>
+              <td><L t={c.focus} /></td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <p class="src"><L t={{
+      zh: '“权重”指是否公开模型权重；“开 + 闭”表示同时有开源与闭源产品线。',
+      en: '"Weights" = whether model weights are public; "Hybrid" means both open and closed product lines.',
+      ja: '「ウェイト」＝重みを公開するか。「ハイブリッド」は開・閉の両ラインを持つ。',
+    }} /></p>
+
+    {/* ---------- deep-dive profile cards ---------- */}
+    <div class="grid cols-2" style="margin-top:1.6rem;">
+      {companies.map((c) => (
+        <article class="card company" id={'co-' + c.id} style={`--co-accent:${c.accent}`}>
+          <div class="co-head">
+            <span class="co-flag">{c.flag}</span>
+            <div class="co-id">
+              <h3>{c.name}</h3>
+              <span class="co-meta"><L t={c.country} /> · {c.founded}</span>
+            </div>
+            <span class={`lic ${stanceLabel[c.stance].cls}`}><L t={stanceLabel[c.stance].t} /></span>
+          </div>
+
+          <p class="co-one"><L t={c.oneLiner} /></p>
+
+          <div class="co-facts">
+            <span class="co-fact"><b><L t={{ zh: '估值', en: 'Valuation', ja: '評価額' }} /></b> {c.valuation} · <L t={c.valuationNote} /></span>
+            <span class="co-fact"><b><L t={{ zh: '旗舰', en: 'Flagship', ja: '旗艦' }} /></b> {c.flagship}</span>
+          </div>
+
+          <p class="co-analysis"><L t={c.analysis} block /></p>
+
+          <div class="proscons">
+            <div class="pros">
+              <div class="h"><L t={{ zh: '强项', en: 'Strengths', ja: '強み' }} /></div>
+              <ul>{c.strengths.map((x) => <li><L t={x} /></li>)}</ul>
+            </div>
+            <div class="cons">
+              <div class="h"><L t={{ zh: '关注点', en: 'What to watch', ja: '注視点' }} /></div>
+              <ul>{c.watch.map((x) => <li><L t={x} /></li>)}</ul>
+            </div>
+          </div>
+
+          <p class="co-pos"><b><L t={{ zh: '定位', en: 'Positioning', ja: '位置づけ' }} />:</b> <L t={c.positioning} /></p>
+
+          {c.productIds.length > 0 && (
+            <div class="co-prods">
+              <span class="co-prods-k"><L t={{ zh: '本站产品', en: 'In the catalog', ja: 'カタログ内' }} /></span>
+              {c.productIds.filter((id) => productMap[id]).map((id) => (
+                <a class="co-chip" href={'#catalog/p-' + id} data-go="catalog" data-target={'p-' + id}>{productMap[id].name}</a>
+              ))}
+            </div>
+          )}
+
+          <div class="plinks">
+            {c.links.map((l) => <a href={l.url} target="_blank" rel="noopener">{l.label} ↗</a>)}
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+</section>

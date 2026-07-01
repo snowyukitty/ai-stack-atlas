@@ -250,11 +250,35 @@ async function dupIds(page) {
   await ctx.close();
 }
 
+// ---------- Companies view (deep dives) ----------
+{
+  const { ctx, page, errors } = await newCtx(1366, 900);
+  await page.goto(FILE + '#companies', { waitUntil: 'networkidle' });
+  await page.waitForTimeout(120);
+  const co = await page.evaluate(() => {
+    const v = document.querySelector('[data-view="companies"]');
+    return {
+      visible: !!v && !v.hidden && v.offsetParent !== null,
+      rows: v ? v.querySelectorAll('table.matrix tbody tr').length : 0,
+      cards: v ? v.querySelectorAll('.company').length : 0,
+      anchored: !!(v && v.querySelector('#co-anthropic')),
+    };
+  });
+  check('companies: view shown via #companies', co.visible, JSON.stringify(co));
+  check('companies: comparison matrix has 8 rows', co.rows === 8, `rows=${co.rows}`);
+  check('companies: 8 deep-dive profile cards', co.cards === 8, `cards=${co.cards}`);
+  check('companies: profile cards anchored (#co-…)', co.anchored);
+  check('companies: no console/page errors', errors.length === 0, errors.join(' | '));
+  await ctx.close();
+}
+
 // ---------- Traditional Chinese (4th language) ----------
 {
   const ctx = await browser.newContext({ viewport: { width: 1366, height: 900 } });
   const page = await ctx.newPage();
   await page.goto(FILE, { waitUntil: 'networkidle' });
+  const defLang = await page.evaluate(() => document.documentElement.getAttribute('data-lang'));
+  check('lang: first load defaults to English', defLang === 'en', `data-lang=${defLang}`);
   const hasBtn = await page.$('#langseg button[data-lang="hant"]');
   check('lang: 繁 (Traditional) button exists', !!hasBtn);
   if (hasBtn) {
