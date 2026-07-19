@@ -29,7 +29,9 @@ const nav = [
         <button data-lang="en" type="button">EN</button>
         <button data-lang="ja" type="button">日</button>
         <button data-lang="hant" type="button">繁</button>
-        <button data-lang="zh" type="button">简</button>
+        {/* Simplified Chinese translations are still rendered in HTML (L.astro).
+            Temporarily hidden from the switcher — remove `hidden` to re-enable. */}
+        <button data-lang="zh" type="button" hidden>简</button>
       </div>
       <button class="icon-btn" id="themebtn" type="button" aria-label="theme">🌓</button>
     </div>

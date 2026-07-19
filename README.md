@@ -1,16 +1,18 @@
 <div align="center">
 
-<img src="public/og.png" alt="AI Stack Atlas — a four-language field guide to the modern AI stack" width="820">
+<img src="public/og.png" alt="AI Stack Atlas — an EN / JA / 繁 field guide to the modern AI stack" width="820">
 
-# AI Stack Atlas · AI Stack 图鉴
+# AI Stack Atlas
 
 ### **[🔗 Live site → snowyukitty.github.io/ai-stack-atlas](https://snowyukitty.github.io/ai-stack-atlas/)**
 
-A **four-language (English · 日本語 · 繁體 · 简体)**, data-driven field guide & comparison hub
+A **three-language (English · 日本語 · 繁體中文)** field guide & comparison hub
 for the modern AI stack — **coding agents · CLIs · harnesses · infrastructure · image / video / 3D / avatars / music / voice** —
 with ranked picks and side-by-side comparisons in each creative domain.
+**English is primary, Japanese secondary; Traditional Chinese is the Chinese UI.**
+Simplified Chinese translations are still in the data/HTML but **temporarily hidden** from the language switcher.
 
-`92 products` · `12 categories` · `11 AI companies` · `4 languages` · `side-by-side compare` · `benchmarks & charts` · `one self-contained file`
+`92 products` · `12 categories` · `11 AI companies` · `3 languages (简 hidden)` · `side-by-side compare` · `benchmarks & charts` · `one self-contained file`
 
 </div>
 
@@ -73,13 +75,15 @@ Requires Node 22.12+ (Astro 7's minimum; developed on Node 22). `npm install` is
 
 ## How it works
 
-The site renders **all four languages into the HTML**, and CSS shows only the active
-one based on `<html data-lang="…">`. Switching language (or light/dark theme) is instant,
-client-side, and persisted to `localStorage` — no rebuild, no page reload.
+The site renders **three display languages into the HTML** (EN · JA · 繁), and CSS shows
+only the active one based on `<html data-lang="…">`. Default is English. Switching
+language (or light/dark theme) is instant, client-side, and persisted to `localStorage`
+— no rebuild, no page reload.
 
-The data is authored in **three locales** (`zh` 简体 / `en` / `ja`); **Traditional Chinese
-(繁體) is derived from `zh` at build time** via OpenCC (`src/lib/hant.ts`, Taiwan `twp`
-preset), so the 4th language needs no duplicated strings.
+Authoring uses **three locales** (`zh` / `en` / `ja`); **Traditional Chinese (繁體) is
+derived from `zh` at build time** via OpenCC (`src/lib/hant.ts`, Taiwan `twp` preset)
+and is the Chinese UI. Simplified (`zh`) strings stay in the HTML for later; the 简
+switcher button is currently `hidden` in `Header.astro` — remove `hidden` to re-enable.
 
 ```
 src/
@@ -91,7 +95,7 @@ src/
     ui.ts              · UI strings + LAST_UPDATED lives in products.ts
   lib/types.ts         · the data model (Product, Concept, …)
   components/
-    L.astro            · i18n text helper ({zh,en,ja}; 繁 derived from zh via lib/hant.ts)
+    L.astro            · i18n text helper (EN/JA/繁; 繁 derived from zh via lib/hant.ts)
     Header / Footer / ProductCard
     views/             · Home, Catalog, Compare, Companies (deep dives), Concepts, Rankings, Stack
     companies.ts       · deep dives on the 11 labs behind the stack (US · China · Europe)
@@ -117,7 +121,9 @@ the same data — no chart library, so the single file stays self-contained.
 ### Adding / updating a product
 
 Open `src/data/products.ts` and add an entry to the `products` array. Every
-human-readable field is a `Loc` (`{ zh, en, ja }`) so it stays trilingual:
+human-readable field is a `Loc` (`{ zh, en, ja }`). English is the primary copy;
+Japanese is secondary; `zh` is the Chinese authoring source that becomes Traditional
+Chinese (繁) at build time — Simplified is never shown:
 
 ```ts
 {

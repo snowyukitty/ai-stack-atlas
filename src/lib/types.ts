@@ -1,4 +1,10 @@
-/** A localized string: Simplified Chinese / English / Japanese. */
+/**
+ * A localized string triple used for authoring.
+ * Display order: English (primary) · Japanese (secondary) · Traditional Chinese.
+ * `zh` holds Simplified Chinese (kept in data + HTML). Traditional Chinese is
+ * derived at build time via OpenCC for the 繁 locale. The Simplified switcher
+ * option is temporarily hidden in the UI.
+ */
 export interface Loc {
   zh: string;
   en: string;

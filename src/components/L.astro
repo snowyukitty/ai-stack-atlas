@@ -1,7 +1,10 @@
 ---
 /**
- * Renders all four languages; CSS (via html[data-lang]) shows the active one.
- * Traditional Chinese ("hant") is derived from `zh` at build time (OpenCC).
+ * Renders all language variants; CSS (via html[data-lang]) shows the active one.
+ * Order: EN (primary) · JA · 繁 (hant) · 简 (zh, temporarily hidden from the switcher).
+ * Traditional is derived from authoring-locale `zh` at build time via OpenCC.
+ * Simplified (`zh`) translations stay in the HTML so they can be re-enabled later —
+ * only the language-switcher button is hidden for now.
  * Use `block` for paragraph-level content.
  */
 import type { Loc } from '../lib/types';
@@ -20,5 +23,6 @@ const wrapClass = (block ? 'i18n-block' : 'i18n') + (cls ? ' ' + cls : '');
   <span lang="en" set:html={t.en}></span>
   <span lang="ja" set:html={t.ja}></span>
   <span lang="hant" set:html={toHant(t.zh)}></span>
+  {/* Simplified: kept in the build, UI switcher temporarily hidden (see Header). */}
   <span lang="zh" set:html={t.zh}></span>
 </Tag>

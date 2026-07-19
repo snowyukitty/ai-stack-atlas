@@ -1,11 +1,18 @@
 import type { Loc } from '../lib/types';
 
+/** Authoring locale codes in Loc. Display adds "hant" (derived from zh via OpenCC). */
 export type LangCode = 'zh' | 'en' | 'ja';
 
-export const LANGS: { code: LangCode; label: string }[] = [
-  { code: 'zh', label: '中文' },
+/**
+ * Language switcher order: EN primary, JA secondary, 繁.
+ * Simplified (`zh` / 简) is temporarily hidden — still in data + HTML.
+ * To re-show: unhide the 简 button in Header.astro and accept `zh` in Base.astro.
+ */
+export const LANGS: { code: 'en' | 'ja' | 'hant' | 'zh'; label: string; hidden?: boolean }[] = [
   { code: 'en', label: 'EN' },
   { code: 'ja', label: '日本語' },
+  { code: 'hant', label: '繁' },
+  { code: 'zh', label: '简', hidden: true },
 ];
 
 /** UI string table. */
@@ -74,9 +81,9 @@ export const ui = {
   },
   footer: {
     built: {
-      zh: '一个会持续更新的 AI Stack 知识库 · 数据驱动 · 四语（EN / 日 / 繁 / 简）',
-      en: 'A continuously updated AI-stack knowledge base · data-driven · 4 languages (EN / 日 / 繁 / 简)',
-      ja: '継続更新する AI スタック知識ベース · データ駆動 · 4 言語（EN / 日 / 繁 / 简）',
+      zh: '一个会持续更新的 AI Stack 知识库 · 数据驱动 · 三语（EN / 日 / 繁）',
+      en: 'A continuously updated AI-stack knowledge base · data-driven · 3 languages (EN / 日 / 繁)',
+      ja: '継続更新する AI スタック知識ベース · データ駆動 · 3 言語（EN / 日 / 繁）',
     },
     disclaimer: {
       zh: '评分与定位为个人观点，benchmark 数据引自公开来源，会随版本变化。',

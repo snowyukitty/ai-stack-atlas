@@ -272,16 +272,24 @@ async function dupIds(page) {
   await ctx.close();
 }
 
-// ---------- Traditional Chinese (4th language) ----------
+// ---------- Languages: EN primary · JA · 繁 (Simplified kept but hidden) ----------
 {
   const ctx = await browser.newContext({ viewport: { width: 1366, height: 900 } });
   const page = await ctx.newPage();
   await page.goto(FILE, { waitUntil: 'networkidle' });
   const defLang = await page.evaluate(() => document.documentElement.getAttribute('data-lang'));
   check('lang: first load defaults to English', defLang === 'en', `data-lang=${defLang}`);
-  const hasBtn = await page.$('#langseg button[data-lang="hant"]');
-  check('lang: 繁 (Traditional) button exists', !!hasBtn);
-  if (hasBtn) {
+  const hasHant = await page.$('#langseg button[data-lang="hant"]');
+  const hasJa = await page.$('#langseg button[data-lang="ja"]');
+  const zhBtn = await page.$('#langseg button[data-lang="zh"]');
+  const zhBtnHidden = zhBtn
+    ? await page.$eval('#langseg button[data-lang="zh"]', (el) => el.hasAttribute('hidden') || el.offsetParent === null)
+    : true;
+  check('lang: 繁 (Traditional) button exists', !!hasHant);
+  check('lang: 日 (Japanese) button exists', !!hasJa);
+  check('lang: Simplified 简 button stays in DOM (for re-enable)', !!zhBtn);
+  check('lang: Simplified 简 button is temporarily hidden', zhBtnHidden);
+  if (hasHant) {
     await page.click('#langseg button[data-lang="hant"]');
     await page.waitForTimeout(80);
     const st = await page.evaluate(() => {
@@ -289,18 +297,23 @@ async function dupIds(page) {
       const wrap = document.querySelector('.hero .lead');
       const zh = wrap.querySelector('[lang="zh"]');
       const hant = wrap.querySelector('[lang="hant"]');
+      const en = wrap.querySelector('[lang="en"]');
       const vis = (el) => !!el && el.offsetParent !== null;
       return {
         dataLang: root.getAttribute('data-lang'),
         htmlLang: root.getAttribute('lang'),
-        hantVisible: vis(hant), zhVisible: vis(zh),
+        hantVisible: vis(hant),
+        enVisible: vis(en),
+        zhVisible: vis(zh),
+        zhPresent: !!zh,
         differs: !!zh && !!hant && zh.textContent !== hant.textContent,
         hantText: hant ? hant.textContent.slice(0, 30) : '',
       };
     });
     check('lang: clicking 繁 sets data-lang=hant', st.dataLang === 'hant', JSON.stringify(st));
     check('lang: html lang becomes zh-Hant', st.htmlLang === 'zh-Hant', `lang=${st.htmlLang}`);
-    check('lang: only the Traditional span shows', st.hantVisible && !st.zhVisible, JSON.stringify(st));
+    check('lang: Traditional span shows, English/Simplified hidden', st.hantVisible && !st.enVisible && !st.zhVisible, JSON.stringify(st));
+    check('lang: Simplified span kept in DOM', st.zhPresent, JSON.stringify(st));
     check('lang: Traditional text differs from Simplified', st.differs, `hant="${st.hantText}"`);
   }
   await ctx.close();

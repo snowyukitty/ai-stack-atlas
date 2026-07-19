@@ -49,13 +49,13 @@ const html = `<!doctype html><html><head><meta charset="utf-8">
   <div class="card">
     <div class="left">
       <div>
-        <div class="kicker">EN · 日 · 繁 · 简 — AI Stack Atlas</div>
+        <div class="kicker">EN · JA · 繁 — AI Stack Atlas</div>
         <div class="title">AI Stack<br>Atlas</div>
-        <div class="sub">看懂整个 AI Stack — <b>agents, CLIs, harnesses, infra &amp; creative AI (image / video / 3D / avatars)</b>, mapped.</div>
+        <div class="sub">Make sense of the entire AI stack — <b>agents, CLIs, harnesses, infra &amp; creative AI (image / video / 3D / avatars)</b>, mapped.</div>
         <div class="pills">
           <span class="pill accent">92 products</span>
           <span class="pill">12 categories</span>
-          <span class="pill">4 languages EN / 日 / 繁 / 简</span>
+          <span class="pill">3 languages EN / 日 / 繁</span>
         </div>
       </div>
       <div class="foot">

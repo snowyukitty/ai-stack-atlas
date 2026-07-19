@@ -12,7 +12,7 @@ const { title, description } = Astro.props;
 const fullTitle = title ? `${title} · AI Stack Atlas` : 'AI Stack Atlas';
 const desc =
   description ??
-  'A four-language (简/繁/EN/日) field guide to the modern AI stack: coding agents, CLIs, agent harnesses, infrastructure, and creative AI (image, video, 3D, avatars, music & voice).';
+  'A three-language (EN / 日 / 繁) field guide to the modern AI stack: coding agents, CLIs, agent harnesses, infrastructure, and creative AI (image, video, 3D, avatars, music & voice).';
 
 // Canonical URL for the deployed (GitHub Pages) site. Harmless for the offline
 // file:// artifact, where these tags are simply ignored. Undefined if no `site`.
@@ -44,15 +44,15 @@ const favicon =
     <meta property="og:description" content={desc} />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="AI Stack Atlas" />
-    <meta property="og:locale" content="zh_CN" />
-    <meta property="og:locale:alternate" content="en_US" />
+    <meta property="og:locale" content="en_US" />
     <meta property="og:locale:alternate" content="ja_JP" />
+    <meta property="og:locale:alternate" content="zh_TW" />
     {canonical && <link rel="canonical" href={canonical} />}
     {canonical && <meta property="og:url" content={canonical} />}
     {ogImage && <meta property="og:image" content={ogImage} />}
     {ogImage && <meta property="og:image:width" content="1200" />}
     {ogImage && <meta property="og:image:height" content="630" />}
-    {ogImage && <meta property="og:image:alt" content="AI Stack Atlas — a four-language field guide to the modern AI stack" />}
+    {ogImage && <meta property="og:image:alt" content="AI Stack Atlas — an EN / JA / 繁 field guide to the modern AI stack" />}
     <meta name="twitter:card" content={ogImage ? 'summary_large_image' : 'summary'} />
     <meta name="twitter:title" content={fullTitle} />
     <meta name="twitter:description" content={desc} />
@@ -70,11 +70,22 @@ const favicon =
     <script is:inline>
       (function () {
         try {
-          var htmlLang = function (l) { return l === 'zh' ? 'zh-Hans' : l === 'hant' ? 'zh-Hant' : l; };
+          // Visible locales: en (primary), ja, hant. Simplified (zh) is temporarily
+          // hidden from the switcher — if a saved preference is "zh", map to hant
+          // so users see Traditional until 简 is re-enabled in Header.astro.
+          var normalize = function (l) {
+            if (l === 'zh' || l === 'zh-Hans' || l === 'zh-CN') return 'hant';
+            if (l === 'en' || l === 'ja' || l === 'hant') return l;
+            return 'en';
+          };
+          var htmlLang = function (l) {
+            return l === 'hant' ? 'zh-Hant' : l === 'zh' ? 'zh-Hans' : l;
+          };
           // First-time visitors default to English; thereafter the saved choice wins.
-          var L = localStorage.getItem('aistack-lang') || 'en';
+          var L = normalize(localStorage.getItem('aistack-lang') || 'en');
           document.documentElement.setAttribute('data-lang', L);
           document.documentElement.setAttribute('lang', htmlLang(L));
+          try { localStorage.setItem('aistack-lang', L); } catch (e2) {}
           var T = localStorage.getItem('aistack-theme');
           if (!T) {
             T = (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) ? 'light' : 'dark';
@@ -104,9 +115,17 @@ const favicon =
         }
         document.querySelectorAll('#langseg button').forEach(function (b) {
           b.addEventListener('click', function () {
+            // Ignore clicks on the temporarily-hidden 简 button if ever unhidden
+            // without wiring; only en / ja / hant are offered in the UI for now.
+            // When re-enabling Simplified: accept l === 'zh' and set lang to zh-Hans.
             var l = b.getAttribute('data-lang');
+            if (l === 'zh') {
+              // Temporarily treat 简 as 繁 (translations still exist in the HTML).
+              l = 'hant';
+            }
+            if (l !== 'en' && l !== 'ja' && l !== 'hant') l = 'en';
             root.setAttribute('data-lang', l);
-            root.setAttribute('lang', l === 'zh' ? 'zh-Hans' : l === 'hant' ? 'zh-Hant' : l);
+            root.setAttribute('lang', l === 'hant' ? 'zh-Hant' : l);
             try { localStorage.setItem('aistack-lang', l); } catch (e) {}
             syncLang();
           });

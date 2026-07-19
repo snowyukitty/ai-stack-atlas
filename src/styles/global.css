@@ -11,8 +11,8 @@
   /* Offset for deep-link scroll targets so they clear the sticky header. */
   --scroll-offset: 84px;
   --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
-    "Helvetica Neue", "PingFang SC", "Hiragino Sans", "Microsoft YaHei",
-    "Noto Sans CJK SC", sans-serif;
+    "Helvetica Neue", "PingFang TC", "Hiragino Sans", "Microsoft JhengHei",
+    "Noto Sans CJK TC", "Hiragino Sans GB", sans-serif;
   --font-mono: ui-monospace, "SFMono-Regular", "JetBrains Mono", "Cascadia Code",
     Consolas, "Liberation Mono", monospace;
 }
@@ -107,18 +107,21 @@ code, kbd {
 
 /* ============================================================
    i18n — show only the active language
+   Display UI: en (primary) · ja · hant.
+   Simplified (zh) CSS is kept so re-enabling the switcher button just works;
+   the 简 button is currently `hidden` in Header.astro.
    ============================================================ */
 .i18n > [lang] { display: none; }
-html[data-lang="zh"] .i18n > [lang="zh"] { display: revert; }
-html[data-lang="hant"] .i18n > [lang="hant"] { display: revert; }
 html[data-lang="en"] .i18n > [lang="en"] { display: revert; }
 html[data-lang="ja"] .i18n > [lang="ja"] { display: revert; }
+html[data-lang="hant"] .i18n > [lang="hant"] { display: revert; }
+html[data-lang="zh"] .i18n > [lang="zh"] { display: revert; }
 /* block-level variant */
 .i18n-block > [lang] { display: none; }
-html[data-lang="zh"] .i18n-block > [lang="zh"] { display: block; }
-html[data-lang="hant"] .i18n-block > [lang="hant"] { display: block; }
 html[data-lang="en"] .i18n-block > [lang="en"] { display: block; }
 html[data-lang="ja"] .i18n-block > [lang="ja"] { display: block; }
+html[data-lang="hant"] .i18n-block > [lang="hant"] { display: block; }
+html[data-lang="zh"] .i18n-block > [lang="zh"] { display: block; }
 
 /* ============================================================
    Header

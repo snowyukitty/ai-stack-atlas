@@ -57,6 +57,7 @@ const total = products.length;
   <script
     is:inline
     define:vars={{
+      // zh kept for when Simplified is re-enabled; active UI uses en / ja / hant.
       placeholders: { zh: ui.labels.search.zh, hant: toHant(ui.labels.search.zh), en: ui.labels.search.en, ja: ui.labels.search.ja },
       showingL: { zh: ui.labels.showing.zh, hant: toHant(ui.labels.showing.zh), en: ui.labels.showing.en, ja: ui.labels.showing.ja },
       resultsL: { zh: ui.labels.results.zh, hant: toHant(ui.labels.results.zh), en: ui.labels.results.en, ja: ui.labels.results.ja },
@@ -75,7 +76,7 @@ const total = products.length;
       var empty = document.getElementById('empty');
       var activeCat = 'all';
 
-      function curLang() { return root.getAttribute('data-lang') || 'zh'; }
+      function curLang() { return root.getAttribute('data-lang') || 'en'; }
       function setPlaceholder() {
         var p = placeholders[curLang()] || placeholders.en;
         search.placeholder = p;
